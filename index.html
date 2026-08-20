@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JMB Lighting — Bluetooth LED lighting controllers</title>
+<meta name="description" content="JMB Lighting builds Bluetooth-controlled DMX/CRMX LED lighting controllers — one, 4our and 8ight. Patch, colour, effects and scenes from your phone. No cloud, no account.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236a2cf5'/%3E%3Ctext x='50' y='68' font-family='sans-serif' font-weight='800' font-size='42' fill='%23fff' text-anchor='middle'%3EJMB%3C/text%3E%3C/svg%3E">
+<style>
+  :root{ --bg:#0b0b16; --bg2:#12122a; --card:#15162b; --line:#262742;
+          --text:#ececf6; --dim:#9a9ac2; --pur:#6a2cf5; --pur2:#c53cff; --cy:#5fd7ff; }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--text);
+    font:16px/1.6 system-ui,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  a{ color:var(--cy); text-decoration:none; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 22px; }
+  .beam{ height:5px; background:linear-gradient(90deg,#ff4d5e,#ffb02e,#3fe08a,#3ba7ff,#8b5cf6,#ff4d9d); }
+  /* nav */
+  nav{ position:sticky; top:0; z-index:9; backdrop-filter:blur(10px);
+    background:rgba(11,11,22,.82); border-bottom:1px solid var(--line); }
+  nav .wrap{ display:flex; align-items:center; gap:18px; height:62px; }
+  nav .links{ margin-left:auto; display:flex; gap:22px; align-items:center; }
+  nav .links a{ color:var(--dim); font-size:14.5px; }
+  nav .links a:hover{ color:var(--text); }
+  .btn{ display:inline-block; background:linear-gradient(135deg,var(--pur2),var(--pur));
+    color:#fff; padding:11px 20px; border-radius:10px; font-weight:600; font-size:15px; }
+  .btn.ghost{ background:transparent; border:1px solid var(--line); color:var(--text); }
+  .btn:hover{ filter:brightness(1.08); }
+  /* hero */
+  header.hero{ position:relative; overflow:hidden;
+    background:radial-gradient(1100px 620px at 15% -10%, #2a1a5e 0%, #14142c 45%, var(--bg) 100%); }
+  .hero .wrap{ padding:70px 22px 84px; }
+  .hero .logo{ margin-bottom:30px; }
+  .hero h1{ font-size:clamp(30px,5.4vw,52px); line-height:1.08; margin:0 0 16px;
+    letter-spacing:-.5px; max-width:16ch; }
+  .hero h1 .g{ background:linear-gradient(90deg,var(--cy),var(--pur2));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p.lead{ font-size:clamp(17px,2.3vw,21px); color:var(--dim); max-width:56ch; margin:0 0 30px; }
+  .cta{ display:flex; gap:14px; flex-wrap:wrap; }
+  section{ padding:74px 0; }
+  section h2{ font-size:clamp(24px,3.4vw,34px); margin:0 0 8px; letter-spacing:-.4px; }
+  section .sub{ color:var(--dim); margin:0 0 40px; font-size:18px; max-width:60ch; }
+  /* products */
+  .prods{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .prod{ background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:26px 24px; transition:border-color .2s, transform .2s; }
+  .prod:hover{ border-color:var(--pur); transform:translateY(-3px); }
+  .prod .pmark{ color:#fff; margin-bottom:18px; min-height:56px; display:flex; align-items:center; }
+  .prod .pports{ display:inline-block; font-size:13px; font-weight:600; color:var(--cy);
+    background:rgba(95,215,255,.10); border:1px solid rgba(95,215,255,.25);
+    padding:3px 10px; border-radius:999px; margin-bottom:12px; }
+  .prod p{ margin:0; color:var(--dim); font-size:15px; }
+  /* features */
+  .feats{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .feat{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; }
+  .feat .fi{ font-size:26px; margin-bottom:10px; }
+  .feat h3{ font-size:16.5px; margin:0 0 6px; }
+  .feat p{ margin:0; color:var(--dim); font-size:14px; }
+  /* app band */
+  .appband{ background:linear-gradient(135deg,#1a1140,#12122a); border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line); }
+  .appband .row{ display:flex; gap:44px; align-items:center; flex-wrap:wrap; }
+  .appband .txt{ flex:1; min-width:280px; }
+  .appband .badges{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .pill{ font-size:13px; color:var(--dim); border:1px solid var(--line);
+    padding:6px 12px; border-radius:999px; background:rgba(255,255,255,.02); }
+  /* contact */
+  .contact .grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:30px; align-items:start; }
+  .contact .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:26px; }
+  .contact dt{ color:var(--dim); font-size:13px; margin-top:14px; }
+  .contact dd{ margin:2px 0 0; font-weight:500; }
+  footer{ border-top:1px solid var(--line); color:var(--dim); font-size:13.5px; }
+  footer .wrap{ padding:34px 22px; display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between; }
+  @media (max-width:820px){
+    .prods{ grid-template-columns:1fr; }
+    .feats{ grid-template-columns:repeat(2,1fr); }
+    .contact .grid{ grid-template-columns:1fr; }
+    nav .links a:not(.btn){ display:none; }
+  }
+</style></head>
+<body>
+
+<nav><div class="wrap">
+  <a href="#top" aria-label="JMB Lighting"><svg viewBox="0 0 190 164" preserveAspectRatio="xMinYMid meet" aria-hidden="true" style="height:30px;width:auto;display:block;vertical-align:middle"><defs><linearGradient id="jmbP" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c53cff"/><stop offset="1" stop-color="#6a2cf5"/></linearGradient><linearGradient id="jmbC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd7ff"/><stop offset="1" stop-color="#1f8fe0"/></linearGradient></defs><rect x="0" y="0" width="190" height="24" fill="url(#jmbP)"/><rect x="0" y="140" width="190" height="24" fill="url(#jmbP)"/><text x="95" y="87" text-anchor="middle" dominant-baseline="central" fill="url(#jmbC)" font-family="system-ui,Segoe UI,Roboto,Arial,sans-serif" font-weight="800" font-size="86" letter-spacing="1">JMB</text></svg></a>
+  <div class="links">
+    <a href="#products">Products</a>
+    <a href="#features">Features</a>
+    <a href="#app">The app</a>
+    <a href="#contact">Contact</a>
+    <a class="btn" href="https://jonathanbillitt.github.io/jmb-zone-app/" target="_blank" rel="noopener">Open the app</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div class="logo"><svg viewBox="0 0 190 164" preserveAspectRatio="xMinYMid meet" aria-hidden="true" style="height:96px;width:auto;display:block;vertical-align:middle"><defs><linearGradient id="jmbP" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c53cff"/><stop offset="1" stop-color="#6a2cf5"/></linearGradient><linearGradient id="jmbC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd7ff"/><stop offset="1" stop-color="#1f8fe0"/></linearGradient></defs><rect x="0" y="0" width="190" height="24" fill="url(#jmbP)"/><rect x="0" y="140" width="190" height="24" fill="url(#jmbP)"/><text x="95" y="87" text-anchor="middle" dominant-baseline="central" fill="url(#jmbC)" font-family="system-ui,Segoe UI,Roboto,Arial,sans-serif" font-weight="800" font-size="86" letter-spacing="1">JMB</text></svg></div>
+  <h1>Bluetooth LED lighting control, <span class="g">done properly</span>.</h1>
+  <p class="lead">JMB Lighting builds compact DMX &amp; CRMX LED controllers you run
+    from your phone — patch, colour, effects and scenes over Bluetooth. No cloud,
+    no account, no fuss.</p>
+  <div class="cta">
+    <a class="btn" href="https://jonathanbillitt.github.io/jmb-zone-app/" target="_blank" rel="noopener">Open the app</a>
+    <a class="btn ghost" href="#products">See the range</a>
+  </div>
+</div></header>
+<div class="beam"></div>
+
+<section id="products"><div class="wrap">
+  <h2>The range</h2>
+  <p class="sub">One control app, three sizes — from a single output to a full eight-port rack.</p>
+  <div class="prods"><div class="prod"><div class="pmark"><svg viewBox="0 0 220 164" preserveAspectRatio="xMinYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><rect x="0" y="0" width="220" height="24" fill="currentColor"/><rect x="0" y="140" width="220" height="24" fill="currentColor"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><circle cx="36" cy="60" r="28"/></g><g transform="translate(74,0)" stroke="currentColor"><path d="M8 24 V96"/><path d="M8 60 A28 28 0 0 1 64 60 V96"/></g><g transform="translate(148,0)" stroke="currentColor" stroke-linejoin="round"><path d="M10.79 75.66 L57.21 44.34"/><path d="M57.21 44.34 A28 28 0 1 0 60.63 68.65"/><circle cx="10.79" cy="75.66" r="8" fill="currentColor" stroke="none"/><circle cx="57.21" cy="44.34" r="8" fill="currentColor" stroke="none"/><polygon points="68.24,71.12 53.02,66.18 53.02,71.12" fill="currentColor" stroke="none"/></g></g></svg></div><div class="pmeta"><span class="pports">1 port</span><p>Single-output controller — compact, for one fixture or strip.</p></div></div><div class="prod"><div class="pmark"><svg viewBox="0 0 334 164" preserveAspectRatio="xMinYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><rect x="0" y="0" width="334" height="24" fill="currentColor"/><rect x="0" y="140" width="334" height="24" fill="currentColor"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><rect x="12" y="0" width="16" height="96" fill="currentColor" stroke="none"/><polygon points="20,0 29.67,0 56.60,39.50 37.26,39.50 13.40,4.50" fill="currentColor" stroke="none"/><path d="M0 64 H72"/></g><g transform="translate(74,0)" stroke="currentColor"><circle cx="48" cy="48" r="40"/></g><g transform="translate(172,0)" stroke="currentColor"><path d="M8 0 V48"/><path d="M8 48 A40 40 0 0 0 88 48"/><path d="M88 0 V96"/></g><g transform="translate(270,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 48 A40 40 0 0 1 59.69 9.75"/></g></g></svg></div><div class="pmeta"><span class="pports">4 ports</span><p>Four independent outputs — the workhorse for booths, bars and small rigs.</p></div></div><div class="prod"><div class="pmark"><svg viewBox="0 0 280 164" preserveAspectRatio="xMinYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><mask id="desc-am-eight" maskUnits="userSpaceOnUse" x="0" y="140" width="280" height="24"><rect x="0" y="140" width="280" height="24" fill="white"/><g transform="translate(88,34)" fill="none" stroke="black" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"><path d="M64 60 V94 A28 28 0 0 1 10.6 105.8"/></g></mask><rect x="0" y="0" width="280" height="24" fill="currentColor"/><rect x="0" y="140" width="280" height="24" fill="currentColor" mask="url(#desc-am-eight)"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor" stroke-linecap="round"><circle cx="32" cy="24" r="16"/><path d="M56 64 A24 24 0 1 1 32 40"/></g><g transform="translate(60,0)" stroke="currentColor"><path d="M16 24 V96"/><circle cx="16" cy="10" r="11" fill="currentColor" stroke="none"/></g><g transform="translate(88,0)" stroke="currentColor" stroke-linecap="round"><circle cx="36" cy="60" r="28"/><path d="M64 60 V94 A28 28 0 0 1 10.6 105.8"/></g><g transform="translate(164,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 60 A28 28 0 0 1 64 60 V96"/></g><g transform="translate(224,0)" stroke="currentColor"><path d="M28 4 V78 A18 18 0 0 0 52 94"/><path d="M8 24 H48"/></g></g></svg></div><div class="pmeta"><span class="pports">8 ports</span><p>Eight outputs from one box — for bigger installs and touring racks.</p></div></div></div>
+</div></section>
+
+<section id="features" style="background:var(--bg2)"><div class="wrap">
+  <h2>Built for real rigs</h2>
+  <p class="sub">Everything a small-to-mid lighting rig needs, in a box that fits your hand.</p>
+  <div class="feats"><div class="feat"><div class="fi">🎛️</div><h3>DMX &amp; CRMX</h3><p>Wired DMX in, or CRMX wireless — plus RDM for remote addressing and feedback.</p></div><div class="feat"><div class="fi">🎨</div><h3>Per-port colour</h3><p>RGB or tuneable white on every port, with a console-style Hue/Sat/Kelvin picker and dimmer.</p></div><div class="feat"><div class="fi">✨</div><h3>17 built-in effects</h3><p>Candle, fire, rainbow, strobe, police and more — with rig-wide tempo and spread.</p></div><div class="feat"><div class="fi">🎬</div><h3>Scenes &amp; shows</h3><p>Save looks with crossfades and export a whole show to a single file.</p></div><div class="feat"><div class="fi">📶</div><h3>Bluetooth app</h3><p>Set up and run everything from your phone. No cloud, no account, no tracking.</p></div><div class="feat"><div class="fi">📈</div><h3>Live telemetry</h3><p>Per-port current, temperature, faults and source — see the rig's health at a glance.</p></div><div class="feat"><div class="fi">🛡️</div><h3>Real protection</h3><p>Per-port over-current, short and thermal protection with foldback — it rides through, it doesn't just trip.</p></div><div class="feat"><div class="fi">⬆️</div><h3>Wireless updates</h3><p>Firmware updates straight over Bluetooth, with automatic rollback if a build misbehaves.</p></div></div>
+</div></section>
+
+<section class="appband" id="app"><div class="wrap"><div class="row">
+  <div class="txt">
+    <h2>Your rig, in your pocket</h2>
+    <p class="sub" style="margin-bottom:0">The companion app talks straight to your
+      controller over Bluetooth — set DMX addresses, mix colour, fire effects, save
+      scenes and watch live telemetry. It collects nothing and needs no sign-in.</p>
+    <div class="badges">
+      <span class="pill">No account</span><span class="pill">No cloud</span>
+      <span class="pill">No tracking</span><span class="pill">Works offline</span>
+      <span class="pill">Wireless firmware updates</span>
+    </div>
+    <div class="cta" style="margin-top:26px">
+      <a class="btn" href="https://jonathanbillitt.github.io/jmb-zone-app/" target="_blank" rel="noopener">Open the app</a>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+  <h2>Get in touch</h2>
+  <p class="sub">Questions, orders or a rig to spec? Drop us a line.</p>
+  <div class="grid">
+    <div class="card">
+      <p style="margin-top:0">We're a UK maker building lighting control that's
+        quick to rig, honest about its state, and pleasant to use. Tell us what
+        you're lighting and we'll point you at the right controller.</p>
+      <a class="btn" href="mailto:hello@jmblighting.co.uk">Email us</a>
+    </div>
+    <div class="card">
+      <dl style="margin:0">
+        <dt>Company</dt><dd>JMB Lighting Ltd</dd>
+        <dt>Email</dt><dd><a href="mailto:hello@jmblighting.co.uk">hello@jmblighting.co.uk</a></dd>
+        <dt>Made in</dt><dd>United Kingdom</dd>
+      </dl>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div>© JMB Lighting Ltd. All rights reserved.</div>
+  <div><a href="#top">Back to top</a> &nbsp;·&nbsp;
+    <a href="https://jonathanbillitt.github.io/jmb-zone-app/" target="_blank" rel="noopener">Companion app</a></div>
+</div></footer>
+
+</body></html>
