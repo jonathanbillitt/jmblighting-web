@@ -18,14 +18,21 @@
 <meta name="twitter:description" content="DMX, CRMX and Bluetooth LED controllers for film, TV and broadcast.">
 <meta name="twitter:image" content="https://jmblighting.co.uk/jmb-og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236a2cf5'/%3E%3Ctext x='50' y='68' font-family='sans-serif' font-weight='800' font-size='42' fill='%23fff' text-anchor='middle'%3EJMB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <style>
   :root{ --bg:#0b0b16; --bg2:#12122a; --card:#15162b; --line:#262742;
           --text:#ececf6; --dim:#9a9ac2; --pur:#6a2cf5; --pur2:#c53cff; --cy:#5fd7ff; }
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
   body{ margin:0; background:var(--bg); color:var(--text);
-    font:16px/1.6 system-ui,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    font:17px/1.65 "Source Serif 4",Georgia,'Times New Roman',serif;
     -webkit-font-smoothing:antialiased; }
+  /* newspaper/editorial treatment: display serif for heads, justified body */
+  h1,h2,h3{ font-family:"Playfair Display",Georgia,serif; font-weight:700;
+    -webkit-font-smoothing:auto; }
+  p{ text-align:justify; -webkit-hyphens:auto; hyphens:auto; }
   a{ color:var(--cy); text-decoration:none; }
   .wrap{ max-width:1080px; margin:0 auto; padding:0 22px; }
   .beam{ height:5px; background:linear-gradient(90deg,#ff4d5e,#ffb02e,#3fe08a,#3ba7ff,#8b5cf6,#ff4d9d); }
@@ -72,10 +79,15 @@
   .feat h3{ font-size:16.5px; margin:0 0 6px; }
   .feat p{ margin:0; color:var(--dim); font-size:14px; }
   /* app band */
-  .appband{ background:linear-gradient(135deg,#1a1140,#12122a); border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line); }
+  .appband{ position:relative; overflow:hidden; background:#111027;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .appband .bg{ position:absolute; inset:0; z-index:0;
+    background:url('jmb-splash.png') no-repeat right -30px center; background-size:auto 150%; }
+  .appband .scrim{ position:absolute; inset:0; z-index:1;
+    background:linear-gradient(90deg,#111027 40%,rgba(17,16,39,.55) 66%,rgba(17,16,39,.12) 100%); }
+  .appband .wrap{ position:relative; z-index:2; }
   .appband .row{ display:flex; gap:44px; align-items:center; flex-wrap:wrap; }
-  .appband .txt{ flex:1; min-width:280px; }
+  .appband .txt{ flex:1; min-width:280px; max-width:48ch; }
   .appband .badges{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
   .pill{ font-size:13px; color:var(--dim); border:1px solid var(--line);
     padding:6px 12px; border-radius:999px; background:rgba(255,255,255,.02); }
@@ -100,6 +112,8 @@
     .prods{ grid-template-columns:1fr; }
     .feats{ grid-template-columns:repeat(2,1fr); }
     .docs{ grid-template-columns:1fr; }
+    .appband .bg{ background-position:center -10px; background-size:auto 118%; opacity:.22; }
+    .appband .scrim{ background:linear-gradient(180deg,rgba(17,16,39,.5),rgba(17,16,39,.82)); }
     .contact .grid{ grid-template-columns:1fr; }
     nav .links a:not(.btn){ display:none; }
   }
@@ -144,7 +158,7 @@
   <div class="feats"><div class="feat"><div class="fi">🎥</div><h3>Flicker-free on camera</h3><p>High-frequency PWM with 16-bit, dithered dimming — no banding on camera, and fades that stay smooth with no visible stepping.</p></div><div class="feat"><div class="fi">🛡️</div><h3>Protection in microseconds</h3><p>Per-port over-current is caught in microseconds — faster than a fuse or a PSU surge — with short and thermal foldback that rides through a fault instead of just tripping.</p></div><div class="feat"><div class="fi">🎛️</div><h3>DMX, CRMX &amp; RDM</h3><p>Wired DMX or CRMX wireless (LumenRadio), with full RDM — discovery, remote addressing and sensor feedback from the desk.</p></div><div class="feat"><div class="fi">🎬</div><h3>21 film-ready effects</h3><p>Fire, candle, lightning, TV glow, passing headlights, faulty fluorescent, paparazzi and more — with rig-wide tempo and spread.</p></div><div class="feat"><div class="fi">🎨</div><h3>Per-port colour &amp; curves</h3><p>RGB or tuneable white on every output, with a Hue/Sat/Kelvin picker, dimmer curves and per-channel trim.</p></div><div class="feat"><div class="fi">📈</div><h3>Live telemetry</h3><p>Per-port current — calibrated to within 1% of a bench meter — plus temperature, faults and source, so the rig tells you the truth about its state.</p></div><div class="feat"><div class="fi">📶</div><h3>Runs from your phone</h3><p>Set up and run everything over Bluetooth. The control path never touches a network: no cloud, no account, no tracking.</p></div><div class="feat"><div class="fi">⬆️</div><h3>Wireless updates</h3><p>Firmware straight over Bluetooth, with automatic rollback if a build ever misbehaves.</p></div></div>
 </div></section>
 
-<section class="appband" id="app"><div class="wrap"><div class="row">
+<section class="appband" id="app"><div class="bg"></div><div class="scrim"></div><div class="wrap"><div class="row">
   <div class="txt">
     <h2>Your rig, in your pocket</h2>
     <p class="sub" style="margin-bottom:0">The companion app talks straight to the
