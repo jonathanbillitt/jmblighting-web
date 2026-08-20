@@ -1,0 +1,349 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>JMB Lighting — User Manual</title><style>
+@page { size: A4; margin: 18mm 16mm; }
+body { font: 10.5pt/1.55 'Segoe UI', system-ui, sans-serif; color: #1a2230; max-width: 175mm; margin: 0 auto; }
+h1 { font-size: 21pt; color: #14203a; border-bottom: 3px solid #6a2cf5; padding-bottom: 6px; margin: 0 0 2px; }
+h1 + p { color: #667; margin-top: 2px; }
+h2 { font-size: 13.5pt; color: #2a1d66; margin: 22px 0 8px; border-bottom: 1px solid #d8d4ee; padding-bottom: 3px; }
+h3 { font-size: 11pt; color: #333; margin: 14px 0 6px; }
+table { border-collapse: collapse; width: 100%; margin: 8px 0 12px; font-size: 9.8pt; page-break-inside: avoid; }
+th { background: #eeeafb; color: #2a1d66; text-align: left; }
+th, td { border: 1px solid #cfc9e8; padding: 4px 8px; vertical-align: top; }
+tr:nth-child(even) td { background: #f7f5fd; }
+td:last-child { min-width: 34px; }
+code { background: #f0eef8; padding: 1px 4px; border-radius: 3px; font: 9.5pt Consolas, monospace; }
+strong { color: #14203a; }
+hr { border: none; border-top: 1px solid #ddd; margin: 16px 0; }
+ul, ol { margin: 6px 0; padding-left: 22px; }
+a { color: #4636b8; }
+blockquote { margin: 10px 0; padding: 6px 14px; border-left: 3px solid #b7ade6; background: #f7f5fd; color: #444; }
+.page-break { page-break-before: always; }
+.footer { margin-top: 26px; font-size: 8.5pt; color: #99a; text-align: center; }
+</style></head><body>
+<h1>JMB Lighting — User Manual</h1>
+<p>JMB one / 4our / 8ight · Firmware 2.x · 2026-08-20 · 4-port shown
+(1/8-port variants identical unless noted)</p>
+<hr />
+<h2>1. Front panel</h2>
+<p>One rotary encoder: <strong>turn</strong> = scroll / adjust, <strong>click</strong> = select,
+<strong>hold (1.2 s)</strong> = back one level, <strong>keep holding (3 s)</strong> = straight home +
+lock from any depth. The home screen shows the JMB mark; hold to
+unlock into the menu. The panel relocks after inactivity (running tests and
+effects keep going). When no source is decoding, the lock screen reads
+<strong>No Data</strong> — whatever the CRMX link state — so a linked-but-silent radio can
+never masquerade as a live source.</p>
+<h3>Main menu</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Mode</td>
+<td>Fade / Step RGBW output tests (click cycles, hold exits)</td>
+</tr>
+<tr>
+<td>Ports</td>
+<td>per-port or All Ports setup, incl. <strong>Presets</strong> — see below</td>
+</tr>
+<tr>
+<td>Sources</td>
+<td><strong>the input hub</strong> — wired DMX and CRMX each with live status (the active source + Hz shows inline and in the header); Chain Listen arms here</td>
+</tr>
+<tr>
+<td>Health</td>
+<td>worst fault inline; Clear Faults + the live universe viewer</td>
+</tr>
+<tr>
+<td>Setup</td>
+<td>system only: ID, Bluetooth + PIN, curve, encoder, language, protection, cal, reset</td>
+</tr>
+</tbody>
+</table>
+<h3>Port Settings (per port, or All Ports)</h3>
+<p>DMX Address and Head Number open the digit editor (turn = digit, click =
+next, SAVE commits; hold cancels; the footprint hint shows the span).
+Personality cycles RGB / RGB16 / CCT / CCT16 / <strong>FX10</strong> (see DMX chart).
+Effect opens the effect picker. PWM Mode cycles <strong>Smooth 8 kHz / Silent
+20 kHz / Camera 62.5 kHz</strong> — Camera is the power-up default and is flicker-free
+for slow-motion capture (see §8). Current and Temp limits step their trip points
+and push to the port hardware immediately. Clear Fault re-arms a latched port.
+<strong>Presets</strong> opens the presets sub-menu (below).</p>
+<p><strong>All Ports adds two rows:</strong>
+- <strong>Chain: Local / Global</strong> — Local edits this unit. <strong>Global</strong> also passes
+  a baton down the DMX line after you commit (see §4).
+- <strong>Apply: Same / Seq / Offset</strong> — how a base address fans out: everyone the
+  same; follow-on by each port's real footprint; or fixed 10-channel spacing
+  (re-personality later without re-patching).</p>
+<h3>Presets (Port Settings → Presets)</h3>
+<p>Three rows:
+- <strong>Dimmer</strong> — a live master brightness. On a single port it opens straight on
+  that port; on <strong>All Ports</strong> it walks each port in turn (turn = level, click =
+  next port). The output follows the encoder <strong>live</strong> — no need to confirm to
+  see it. 1 % steps on a slow turn, coarser when you spin. Hold = cancel and
+  restore the levels you started with.
+- <strong>Colours</strong> — the factory colour / CCT looks.
+- <strong>Scenes</strong> — your four user looks (U1–U4).</p>
+<p>When Port Settings is on <strong>All Ports</strong> <em>and</em> <strong>Chain: Global</strong>, the Dimmer row
+becomes a <strong>Chain Master</strong>: you set one level and, after a <strong>DEPLOY DIMMER?</strong>
+confirm, it sets every port on this unit <em>and</em> every <strong>armed</strong> unit down the
+DMX line (see §4). Deploy from the <strong>first</strong> controller in the chain to reach
+the whole rig.</p>
+<h3>Sources (the input hub)</h3>
+<p>One screen answers "what's driving the rig": the header names the <strong>active
+source and its refresh rate</strong>, and each row carries live status — <strong>DMX In</strong>
+(Hz or <em>silent</em>; click = the line analyzer), <strong>CRMX</strong> (<em>no link</em> / <em>NO DATA</em> /
+Hz — data-driven, so "linked but nothing arriving" is visible at a glance;
+click = link/unlink/antenna) and <strong>Chain Listen</strong> (arms this unit to accept
+ONE Global baton — always Off at power-up, disarms itself after use).</p>
+<h3>Setup</h3>
+<p>Controller ID (shows on screens, in the Bluetooth name after reboot, and in
+the RDM label) · Bluetooth on/off + PIN · Dimmer Curve (Lin / Soft 1.6 /
+Thtr 2.2) · Reverse Encoder · Language · Thermal Fold · Sensor Cal ·
+Factory Reset (confirmed).</p>
+<hr />
+<h2>2. Output priority</h2>
+<p><strong>Test mode → Identify (RDM/app) → live DMX → Effect → Manual → hold-last.</strong>
+Live DMX always outranks manual and effects; when the desk vanishes, the
+last DMX look holds until you set something else. Outputs soft-start over
+~1 s at power-up. All sources pass the dimmer curve.</p>
+<p><strong>"Live DMX" is the wired input <em>or</em> the CRMX radio</strong> — they merge into one
+universe, so everything downstream (patch, FX personality, the diagnostics
+viewer, RDM) treats the radio exactly like a cable. The header on every screen
+names the winner: <strong>DMX</strong> or <strong>CRMX</strong>.</p>
+<h2>2a. Firmware update over Bluetooth (BLE OTA)</h2>
+<p>The controller updates its own firmware straight over Bluetooth from the app —
+no USB, no cable, no Wi-Fi.</p>
+<ul>
+<li><strong>In the app</strong> (Setup → <em>Firmware update</em>): pick a <code>firmware.bin</code>, confirm,
+  and the app streams it to the controller over the Bluetooth link. A progress
+  bar tracks the transfer; outputs hold their last look throughout.</li>
+<li><strong>The image is checked before it runs</strong> (CRC verified end-to-end) and only
+  then made the next boot.</li>
+<li><strong>Automatic rollback.</strong> After an update the controller boots the new image on
+  probation: if it doesn't come up cleanly and confirm itself, the controller
+  falls back to the previous working firmware on its own. The app shows a
+  <em>confirming…</em> indicator during probation and <em>firmware confirmed</em> once the
+  new build has proven itself, so a bad flash can never brick the unit.</li>
+</ul>
+<blockquote>
+<p>Wi-Fi / network DMX (sACN, Art-Net) and Wi-Fi OTA are not part of the
+shipping firmware — the control path is deliberately kept off the network for
+responsiveness. Wired DMX, CRMX and BLE cover input and updates.</p>
+</blockquote>
+<hr />
+<h2>3. Effects</h2>
+<p>Twenty-one built-in dynamic looks per port (Candle, Fire, Fireworks, Water,
+Siren, Laser, Club, Lightning, Rainbow, Aurora, Sunset, TV Sim, Strobe,
+Police, Pulse, Party, Traffic, <strong>Fluoro, Paparazzi, Explosion, Clouds</strong>). Set
+from Port Settings → Effect, the app, or DMX channel 8 of the FX personality. Speed 0–255 (128 = designed tempo)
+from the app or DMX channel 9. While an effect runs, the app's <strong>RGB
+sliders become its colour trim</strong> — all at full = the untouched effect;
+pull one down to take that colour out (Rainbow minus blue, say). The trim
+is a live tool: it resets to full at power-up. <strong>Effects never start on
+their own.</strong> When
+DMX is absent, an effect runs only from the moment you deliberately pick
+it (panel or app) — a saved effect does not auto-run at power-up, and a
+desk dropout (cable or CRMX) always <strong>holds the last DMX look</strong> rather
+than starting one. Pick the effect again after a loss to run it. Siren/Police alternate across ports like a
+lightbar; Party pulses fully-saturated colour on a 128 BPM bar clock;
+Fireworks bursts out of true darkness; <strong>Sunset is a one-shot arc</strong> — from
+golden hour it eases through ember red down to black over ~2 minutes and
+stays there; re-select it (or dip the port dimmer to 0 and back up) to
+run another sunset. Traffic plays passing-headlight sweeps with
+independent timing per port. <strong>The film gags:</strong> Fluoro is a failing
+fluorescent tube — rapid failed strikes, then it catches and holds with a
+faint mains buzz; Paparazzi fires irregular hard white pops, independent per
+port, like a press pit; Explosion is a white-hot flash blooming to an orange
+fireball with an ember-flicker decay; Clouds drifts daylight slowly dimmer
+and cooler as cloud crosses the sun, then back.</p>
+<p><strong>Rig-wide effect controls</strong> (the app's Effects card): <strong>Tap tempo</strong> sets the
+whole rig's beat-effect speed to the music — tap the app's Tap button in time
+(or type a BPM, 60–240; 128 is the designed tempo). <strong>Spread</strong> offsets
+each port in time (0–100 %) so effects sweep across the rig as a wave
+instead of every port in lockstep. Both persist across reboots.</p>
+<p><strong>Capture to scene:</strong> the app's Scenes tab saves the current look — <strong>Save current
+as scene…</strong> (named) or <strong>Capture live</strong> (one tap, auto-named). A scene captures
+the whole programmer state (colour, or effect + speed), recalls with a crossfade,
+and rides in the show file. <strong>Up to 100 scenes per phone</strong> (they live in the
+phone's browser storage, and in any show file you export).</p>
+<hr />
+<h2>4. Global addressing (chain baton)</h2>
+<p>To address a whole chain of controllers from one screen:</p>
+<ol>
+<li>On <strong>every unit that should take part</strong>: Sources → <strong>Chain Listen → ARMED</strong>.
+   (Units left Off are untouched — preset rigs are safe.)</li>
+<li>On unit 1: Port Settings → All Ports → Chain: <strong>Global</strong>, choose Apply
+   mode, open DMX Address, enter the base, SAVE.</li>
+<li>Confirm the <strong>DEPLOY CHAIN?</strong> warning. Unit 1 addresses itself, then each
+   armed unit down the line takes the follow-on addresses <strong>and the next
+   controller ID</strong>, shows a receipt, disarms, and relays onward.</li>
+</ol>
+<p>Head numbers chain the same way. A unit accepts one baton per arming.</p>
+<p><strong>The dimmer chains too.</strong> With the same arming in place, Port Settings → All
+Ports → Chain: Global → <strong>Presets → Dimmer</strong> gives a single <strong>Chain Master</strong>
+level. Set it, confirm <strong>DEPLOY DIMMER?</strong>, and every armed unit down the line
+takes the same brightness. Only a downstream unit hears the baton, so deploy
+from the first controller in the chain. (Addresses are untouched — this only
+moves the dimmer.)</p>
+<p><strong>Looks, blackout and full chain too.</strong> All Ports → Chain: Global → <strong>Presets →
+Colours</strong> → pick a colour/CCT and confirm <strong>DEPLOY LOOK?</strong> to set that look on
+every armed unit. Choosing <strong>Off</strong> blacks out the whole chain; <strong>White</strong> takes
+it to full. The app's <strong>Chain broadcast</strong> card has one-tap <strong>Blackout / Full /
+DMX In</strong> buttons for the same thing. (Dimmer and looks never re-address or
+renumber — they only change the output.)</p>
+<hr />
+<h2>5. RDM</h2>
+<p>The controller is a full E1.20 responder: discovery, identify (flashes the
+ports and strobes the main screen <strong>HERE</strong>), device info, start address,
+personality — the root device carries the rack view (a SET fans out per the
+Apply mode) and each port is addressable individually as a sub-device.
+E1.37-1 dimmer curve and PWM frequency are settable from the desk. The
+controller also publishes <strong>per-port temperature and current as E1.20 sensors</strong>
+on the root device ("Port 1 Temp", "Port 1 Current", …), so any RDM console
+reads fixture health live. The main screen also flashes the moment discovery
+finds the unit. The powered DMX
+thru forwards everything downstream; downstream fixtures' RDM responses are
+relayed back to the desk automatically.</p>
+<p><strong>RDM controller (the app's Diag tab).</strong> The controller is also an RDM
+<em>controller</em> for everything plugged into its thru line — a full RDM tester
+built into the rack. <strong>Scan</strong> discovers every downstream RDM fixture and lists it as a
+card: model, label, UID, start address, footprint, personality and sensor
+count. Tap a card to edit it in place — <strong>identify</strong> (flash the fixture to
+find it), <strong>start address</strong>, <strong>personality</strong>, <strong>label</strong>, and live <strong>sensor
+reads</strong>. Scanning takes over the output line while it runs, so with an
+upstream desk live the app asks before taking over; the session releases the
+thru automatically when you stop (or after 3 minutes idle).</p>
+<hr />
+<h2>6. The app</h2>
+<p><strong>https://jonathanbillitt.github.io/jmb-zone-app/</strong> — Chrome/Edge on
+Android or desktop (iPhone: open it in the Bluefy browser). Add to Home
+screen for the full-screen app. Connect → PIN (default <strong>0123</strong>, change it
+in Setup). If a controller was just reflashed, toggle the phone's Bluetooth
+off/on before connecting.</p>
+<table>
+<thead>
+<tr>
+<th>Tab</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control</td>
+<td>per-port cards: address, head, personality, effect + speed, RGB sliders, <strong>Dim / FX-speed jog wheels</strong>, Prep-all button; tap the label slot in a card's header to <strong>name the port</strong> (16 characters — the name also appears under the head number on that port's screen when the panel is locked)</td>
+</tr>
+<tr>
+<td>Colour</td>
+<td>console-style picker: Dim, Hue, Sat, Kelvin, ΔUV columns — one colour model, every fader a projection of it; ΔUV is an independent green/magenta trim; CW/WW targets get a Kelvin-only picker with a live mix readout</td>
+</tr>
+<tr>
+<td>Scenes</td>
+<td>save / recall with per-scene crossfade seconds; stored on the phone; included in the show file</td>
+</tr>
+<tr>
+<td>Ports</td>
+<td>live telemetry: patch, output current, temperature, faults, source (matching the port screens)</td>
+</tr>
+<tr>
+<td>Diag</td>
+<td>the line-analyzer suite: <strong>signal card</strong> (live/no-signal, source, fps with a rolling sparkline, slots, start code, packet age, error counts) · <strong>universe analyzer</strong> — full-screen heatmap with <strong>Live / Min / Max / Activity</strong> views, a min-max <strong>capture</strong> recorder and a channel inspector (tap a cell: level, %, captured range, change count, and which port it patches to) · <strong>flicker finder</strong> — arm it and every channel change on the wire is logged with values and timing · <strong>RDM universe controller</strong> (see §5) · port-bus health</td>
+</tr>
+<tr>
+<td>Setup</td>
+<td>controller ID, curve, apply mode, <strong>Firmware update</strong> (over Bluetooth — see §2a), <strong>Flash-to-find</strong>, reset-all + undo, show-file export/import, PIN, disconnect</td>
+</tr>
+</tbody>
+</table>
+<p>Touching any colour control takes manual control automatically; the picker
+stomps running effects on its targets. On a <strong>CW/WW personality</strong> the Control
+sliders change identity: Warm (amber track) and Cool (ice-blue track), with
+the unused Blue slider hidden. Export produces one <strong>.jmb show
+file</strong> carrying the whole rig — addresses, heads, labels, looks and scenes —
+import it on any phone or controller.</p>
+<p><strong>The app updates itself.</strong> It always loads the newest version when opened
+with any internet connection, and keeps working offline from its cached copy
+at a venue. No store updates, nothing to install — reopen it and you're
+current.</p>
+<p><strong>Demo mode.</strong> <em>Explore in demo mode</em> on the connect screen walks the entire
+app — every tab, the analyzers, even an RDM scan that discovers example
+fixtures — with no controller present. Nothing a demo user touches goes
+anywhere.</p>
+<hr />
+<h2>7. Fault handling</h2>
+<p>Ports protect themselves: over-current (hiccup ×3 then latch), bolted-short
+µs trip, over-temperature, ground-leak imbalance, comms-loss failsafe.
+Latched ports show a flashing fault banner on their screen, the fault word
+appears in the menu and the app, and Clear Faults / Port Reset re-arms.</p>
+<p><strong>Thermal foldback</strong> (Setup → Thermal Fold, on by default): before a port hits
+its over-temp trip, it eases the output down over the last 10 °C (to a 30 %
+floor) so a hot fixture <em>rides through</em> instead of hard-latching mid-show. The
+latch stays as the real-fault backstop.</p>
+<hr />
+<h2>8. Camera &amp; slow-motion work</h2>
+<p>Each port dims with a high-frequency PWM carrier, set per port under <strong>Port
+Settings → PWM Mode</strong> (also in the app, and over RDM via MODULATION_FREQUENCY):</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Carrier</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Camera</strong> <em>(default)</em></td>
+<td><strong>62.5 kHz</strong></td>
+<td>Any shoot — flicker-free on high-speed cameras</td>
+</tr>
+<tr>
+<td>Silent</td>
+<td>20 kHz</td>
+<td>Quietest drive (no coil whine) when no camera is present</td>
+</tr>
+<tr>
+<td>Smooth</td>
+<td>8 kHz</td>
+<td>Maximum low-end dimming smoothness, eye-only / theatre</td>
+</tr>
+</tbody>
+</table>
+<p>All three carry the full ~16-bit dimming resolution (temporal dithering makes up
+the difference at the higher carriers), so the picture is identically smooth —
+only the flicker frequency changes.</p>
+<p><strong>Setting up for slow-motion / high-speed capture:</strong></p>
+<ul>
+<li><strong>Leave every port on Camera (62.5 kHz)</strong> — it's the power-up default. At
+  62.5 kHz the output is flat through exposures short enough for normal
+  high-speed work (comfortably to ~1000 fps at sensible shutter angles).</li>
+<li><strong>Keep all ports on the same mode</strong> so multiple fixtures match on camera. Use
+  All Ports → PWM Mode, or set it once over RDM, to change the whole rig together.</li>
+<li><strong>Extreme frame rates</strong> (multi-thousand fps) with very short exposures: shoot a
+  quick test first. <em>Any</em> PWM dimmer can show faint banding when the exposure
+  catches only a few carrier cycles — if you see it, widen the shutter angle or
+  drop the frame rate slightly. Higher isn't selectable beyond 62.5 kHz.</li>
+<li><strong>Turn strobe looks off for clean capture.</strong> The Strobe / Police effects and
+  the FX personality's shutter channel (CH10) <em>deliberately</em> chop the output —
+  that's the effect, not carrier flicker. Set the shutter open / effect Off.</li>
+<li><strong>Fades and colour moves are flicker-free</strong> at the carrier; dial fade times and
+  the dimmer curve as normal — nothing special needed for the camera.</li>
+</ul>
+<hr />
+<h2>9. Quick reference</h2>
+<ul>
+<li>Default PIN: <strong>0123</strong> · default addresses: sequential RGB</li>
+<li>DMX chart: see <code>docs/DMX_CHART.md</code></li>
+<li>Start address caps at 513 − footprint so the whole personality fits the
+  universe (FX 10ch → max 503); it drops automatically if you switch a port
+  to a larger personality</li>
+<li>Chain Listen is always Off after power-up — arming is deliberate</li>
+<li>The app's Undo restores the state captured before the last Reset-all</li>
+<li>Supply: 24 V standard (12 V supported — match the strip voltage). All
+  protections are current- and temperature-based, so they work identically
+  on either rail; at 12 V each port delivers half the wattage for the same
+  current limit</li>
+</ul>
+</body></html>
