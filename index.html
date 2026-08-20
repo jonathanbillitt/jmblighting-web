@@ -43,10 +43,12 @@
   /* hero */
   header.hero{ position:relative; overflow:hidden;
     background:radial-gradient(1100px 620px at 15% -10%, #2a1a5e 0%, #14142c 45%, var(--bg) 100%); }
-  .hero .wrap{ padding:70px 22px 84px; }
-  .hero .logo{ margin-bottom:34px; display:flex; justify-content:center; }
+  .hero .wrap{ padding:60px 22px 66px; }
   .prod .pmark{ justify-content:center; }
-  .hero h1{ font-size:clamp(30px,5.4vw,52px); line-height:1.08; margin:0 0 16px;
+  .hgrid{ display:grid; grid-template-columns:1.05fr .95fr; gap:34px; align-items:center; }
+  .hart{ display:flex; justify-content:center; }
+  .heroimg{ width:100%; max-width:460px; height:auto; mix-blend-mode:screen; }
+  .hero h1{ font-size:clamp(30px,5.2vw,52px); line-height:1.08; margin:0 0 16px;
     letter-spacing:-.5px; max-width:16ch; }
   .hero h1 .g{ background:linear-gradient(90deg,var(--cy),var(--pur2));
     -webkit-background-clip:text; background-clip:text; color:transparent; }
@@ -72,15 +74,10 @@
   .feat h3{ font-size:16.5px; margin:0 0 6px; }
   .feat p{ margin:0; color:var(--dim); font-size:14px; }
   /* app band */
-  .appband{ position:relative; overflow:hidden; background:#111027;
+  .appband{ background:linear-gradient(135deg,#1a1140,#12122a);
     border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  .appband .bg{ position:absolute; inset:0; z-index:0;
-    background:url('jmb-splash.png') no-repeat right -30px center; background-size:auto 150%; }
-  .appband .scrim{ position:absolute; inset:0; z-index:1;
-    background:linear-gradient(90deg,#111027 40%,rgba(17,16,39,.55) 66%,rgba(17,16,39,.12) 100%); }
-  .appband .wrap{ position:relative; z-index:2; }
   .appband .row{ display:flex; gap:44px; align-items:center; flex-wrap:wrap; }
-  .appband .txt{ flex:1; min-width:280px; max-width:48ch; }
+  .appband .txt{ flex:1; min-width:280px; }
   .appband .badges{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
   .pill{ font-size:13px; color:var(--dim); border:1px solid var(--line);
     padding:6px 12px; border-radius:999px; background:rgba(255,255,255,.02); }
@@ -102,11 +99,12 @@
   footer{ border-top:1px solid var(--line); color:var(--dim); font-size:13.5px; }
   footer .wrap{ padding:34px 22px; display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between; }
   @media (max-width:820px){
+    .hgrid{ grid-template-columns:1fr; gap:14px; }
+    .hart{ order:-1; }
+    .heroimg{ max-width:240px; }
     .prods{ grid-template-columns:1fr; }
     .feats{ grid-template-columns:repeat(2,1fr); }
     .docs{ grid-template-columns:1fr; }
-    .appband .bg{ background-position:center -10px; background-size:auto 118%; opacity:.22; }
-    .appband .scrim{ background:linear-gradient(180deg,rgba(17,16,39,.5),rgba(17,16,39,.82)); }
     .contact .grid{ grid-template-columns:1fr; }
     nav .links a:not(.btn){ display:none; }
   }
@@ -125,18 +123,21 @@
   </div>
 </div></nav>
 
-<header class="hero" id="top"><div class="wrap">
-  <div class="logo"><svg viewBox="0 0 190 164" preserveAspectRatio="xMinYMid meet" aria-hidden="true" style="height:132px;width:auto;display:block;vertical-align:middle"><defs><linearGradient id="jmbP" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c53cff"/><stop offset="1" stop-color="#6a2cf5"/></linearGradient><linearGradient id="jmbC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd7ff"/><stop offset="1" stop-color="#1f8fe0"/></linearGradient></defs><rect x="0" y="0" width="190" height="24" fill="url(#jmbP)"/><rect x="0" y="140" width="190" height="24" fill="url(#jmbP)"/><text x="95" y="112.1" text-anchor="middle" dominant-baseline="alphabetic" fill="url(#jmbC)" font-family="system-ui,Segoe UI,Roboto,Arial,sans-serif" font-weight="800" font-size="86" letter-spacing="1">JMB</text></svg></div>
-  <h1>LED lighting control that holds up <span class="g">on camera</span>.</h1>
-  <p class="lead">JMB Lighting builds compact DMX, CRMX and Bluetooth LED
-    controllers for film, TV and broadcast — flicker-free 16-bit dimming,
-    protection measured in microseconds, and full RDM. Rig it, run it and read
-    its health from your phone. No cloud, no account.</p>
-  <div class="cta">
-    <a class="btn" href="https://jonathanbillitt.github.io/jmb-zone-app/" target="_blank" rel="noopener">Open the app</a>
-    <a class="btn ghost" href="#products">See the range</a>
+<header class="hero" id="top"><div class="wrap"><div class="hgrid">
+  <div class="hcopy">
+    <h1>LED lighting control that holds up <span class="g">on camera</span>.</h1>
+    <p class="lead">JMB Lighting builds compact DMX, CRMX and Bluetooth LED
+      controllers for film, TV and broadcast — flicker-free 16-bit dimming,
+      protection measured in microseconds, and full RDM. Rig it, run it and read
+      its health from your phone. No cloud, no account.</p>
+    <div class="cta">
+      <a class="btn" href="https://jonathanbillitt.github.io/jmb-zone-app/" target="_blank" rel="noopener">Open the app</a>
+      <a class="btn ghost" href="#products">See the range</a>
+    </div>
   </div>
-</div></header>
+  <div class="hart"><img class="heroimg" src="jmb-splash.png" width="640" height="640"
+    alt="JMB Lighting — neon logo"></div>
+</div></div></header>
 <div class="beam"></div>
 
 <section id="products"><div class="wrap">
@@ -151,7 +152,7 @@
   <div class="feats"><div class="feat"><div class="fi">🎥</div><h3>Flicker-free on camera</h3><p>High-frequency PWM with 16-bit, dithered dimming — no banding on camera, and fades that stay smooth with no visible stepping.</p></div><div class="feat"><div class="fi">🛡️</div><h3>Protection in microseconds</h3><p>Per-port over-current is caught in microseconds — faster than a fuse or a PSU surge — with short and thermal foldback that rides through a fault instead of just tripping.</p></div><div class="feat"><div class="fi">🎛️</div><h3>DMX, CRMX &amp; RDM</h3><p>Wired DMX or CRMX wireless (LumenRadio), with full RDM — discovery, remote addressing and sensor feedback from the desk.</p></div><div class="feat"><div class="fi">🎬</div><h3>21 film-ready effects</h3><p>Fire, candle, lightning, TV glow, passing headlights, faulty fluorescent, paparazzi and more — with rig-wide tempo and spread.</p></div><div class="feat"><div class="fi">🎨</div><h3>Per-port colour &amp; curves</h3><p>RGB or tuneable white on every output, with a Hue/Sat/Kelvin picker, dimmer curves and per-channel trim.</p></div><div class="feat"><div class="fi">📈</div><h3>Live telemetry</h3><p>Per-port current — calibrated to within 1% of a bench meter — plus temperature, faults and source, so the rig tells you the truth about its state.</p></div><div class="feat"><div class="fi">📶</div><h3>Runs from your phone</h3><p>Set up and run everything over Bluetooth. The control path never touches a network: no cloud, no account, no tracking.</p></div><div class="feat"><div class="fi">⬆️</div><h3>Wireless updates</h3><p>Firmware straight over Bluetooth, with automatic rollback if a build ever misbehaves.</p></div></div>
 </div></section>
 
-<section class="appband" id="app"><div class="bg"></div><div class="scrim"></div><div class="wrap"><div class="row">
+<section class="appband" id="app"><div class="wrap"><div class="row">
   <div class="txt">
     <h2>Your rig, in your pocket</h2>
     <p class="sub" style="margin-bottom:0">The companion app talks straight to the
