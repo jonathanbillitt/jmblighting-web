@@ -41,13 +41,14 @@
   .btn.ghost{ background:transparent; border:1px solid var(--line); color:var(--text); }
   .btn:hover{ filter:brightness(1.08); }
   /* hero */
-  header.hero{ position:relative; overflow:hidden;
-    background:radial-gradient(1100px 620px at 15% -10%, #2a1a5e 0%, #14142c 45%, var(--bg) 100%); }
-  .hero .wrap{ padding:60px 22px 66px; }
+  header.hero{ position:relative; overflow:hidden; background:#000006;
+    background-image:linear-gradient(90deg,#000006 20%,rgba(0,0,6,0) 56%), url('jmb-hero.png');
+    background-repeat:no-repeat; background-position:right center; background-size:cover; }
+  .hero .wrap{ padding:96px 22px 104px; position:relative; }
   .prod .pmark{ justify-content:center; }
-  .hgrid{ display:grid; grid-template-columns:1.05fr .95fr; gap:34px; align-items:center; }
-  .hart{ display:flex; justify-content:center; }
-  .heroimg{ width:100%; max-width:460px; height:auto; mix-blend-mode:screen; }
+  .hcopy{ max-width:min(560px,58%); position:relative; z-index:1; }
+  .hart{ display:none; }
+  .heroimg{ width:min(112vw,112vh); max-width:330px; height:auto; mix-blend-mode:screen; }
   .hero h1{ font-size:clamp(30px,5.2vw,52px); line-height:1.08; margin:0 0 16px;
     letter-spacing:-.5px; max-width:16ch; }
   .hero h1 .g{ background:linear-gradient(90deg,var(--cy),var(--pur2));
@@ -99,9 +100,12 @@
   footer{ border-top:1px solid var(--line); color:var(--dim); font-size:13.5px; }
   footer .wrap{ padding:34px 22px; display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between; }
   @media (max-width:820px){
-    .hgrid{ grid-template-columns:1fr; gap:14px; }
-    .hart{ order:-1; }
-    .heroimg{ max-width:240px; }
+    header.hero{ background-image:none;
+      background:radial-gradient(900px 520px at 50% -12%, #241452 0%, #14142c 48%, var(--bg) 100%); }
+    .hero .wrap{ display:flex; flex-direction:column; padding:40px 22px 54px; }
+    .hart{ display:flex; order:-1; justify-content:center; margin-bottom:4px; }
+    .heroimg{ max-width:300px; }
+    .hcopy{ max-width:100%; }
     .prods{ grid-template-columns:1fr; }
     .feats{ grid-template-columns:repeat(2,1fr); }
     .docs{ grid-template-columns:1fr; }
@@ -123,7 +127,7 @@
   </div>
 </div></nav>
 
-<header class="hero" id="top"><div class="wrap"><div class="hgrid">
+<header class="hero" id="top"><div class="wrap">
   <div class="hcopy">
     <h1>LED lighting control that holds up <span class="g">on camera</span>.</h1>
     <p class="lead">JMB Lighting builds compact DMX, CRMX and Bluetooth LED
@@ -137,7 +141,7 @@
   </div>
   <div class="hart"><img class="heroimg" src="jmb-splash.png" width="640" height="640"
     alt="JMB Lighting — neon logo"></div>
-</div></div></header>
+</div></header>
 <div class="beam"></div>
 
 <section id="products"><div class="wrap">
