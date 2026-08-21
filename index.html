@@ -125,14 +125,17 @@
   .contact dd{ margin:2px 0 0; font-weight:500; }
   footer{ border-top:1px solid var(--line); color:var(--dim); font-size:13.5px; }
   footer .wrap{ padding:34px 22px; display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between; }
-  @media (max-width:820px){
+  /* the side-by-side hero needs real width; below 1080px stack it (badge above
+     text) so the badge never collides with the copy. #000006 bg blends the
+     badge's dark top/bottom; on phones it bleeds full-width, on tablets it caps. */
+  @media (max-width:1080px){
     header.hero{ background-image:none; background:#000006; }
     .hero .wrap{ display:flex; flex-direction:column; padding:26px 22px 54px; }
-    /* full-bleed the badge: negate the wrap padding, then over-size it so its
-       side edges bleed past the screen; #000006 bg blends its dark top/bottom */
     .hart{ display:flex; order:-1; justify-content:center; margin:0 calc(50% - 50vw) 2px; }
-    .heroimg{ width:110vw; max-width:none; }
+    .heroimg{ width:min(112vw,520px); max-width:none; }
     .hcopy{ max-width:100%; }
+  }
+  @media (max-width:820px){
     .prods{ grid-template-columns:1fr; }
     .feats{ grid-template-columns:repeat(2,1fr); }
     .docs{ grid-template-columns:1fr; }
