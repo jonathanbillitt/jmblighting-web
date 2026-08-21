@@ -125,20 +125,18 @@
   .contact dd{ margin:2px 0 0; font-weight:500; }
   footer{ border-top:1px solid var(--line); color:var(--dim); font-size:13.5px; }
   footer .wrap{ padding:34px 22px; display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between; }
-  /* 820–1080: side-by-side, but drop the wide bg and show the badge as a
-     screen-blended image sized to its own column — it blends into #000006 (no
-     edges), stays a good size, and can't overlap the copy. */
+  /* 820–1080: keep the full-bleed one-image hero (badge behind, extending to the
+     edges and down to the beam — no visible edges); just narrow the copy so it
+     sits over the dark left, clear of the bright badge. */
   @media (max-width:1080px){
-    header.hero{ background-image:none; background:#000006; }
-    .hero .wrap{ display:flex; align-items:center; gap:24px; padding:56px 22px 60px; }
-    .hcopy{ max-width:none; flex:1 1 auto; }
-    .hart{ display:flex; flex:0 0 42%; justify-content:center; margin:0; }
-    .heroimg{ width:100%; max-width:420px; }
+    .hero .wrap{ padding:74px 22px 82px; }
+    .hcopy{ max-width:min(360px,42%); }
   }
   /* true phones: stack the badge above the text */
   @media (max-width:820px){
-    .hero .wrap{ flex-direction:column; padding:26px 22px 54px; }
-    .hart{ flex:none; order:-1; margin:0 calc(50% - 50vw) 2px; }
+    header.hero{ background-image:none; background:#000006; }
+    .hero .wrap{ display:flex; flex-direction:column; padding:26px 22px 54px; }
+    .hart{ display:flex; order:-1; justify-content:center; margin:0 calc(50% - 50vw) 2px; }
     .heroimg{ width:min(112vw,520px); max-width:none; }
     .hcopy{ max-width:100%; }
     .prods{ grid-template-columns:1fr; }
