@@ -125,17 +125,20 @@
   .contact dd{ margin:2px 0 0; font-weight:500; }
   footer{ border-top:1px solid var(--line); color:var(--dim); font-size:13.5px; }
   footer .wrap{ padding:34px 22px; display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between; }
-  /* the side-by-side hero needs real width; below 1080px stack it (badge above
-     text) so the badge never collides with the copy. #000006 bg blends the
-     badge's dark top/bottom; on phones it bleeds full-width, on tablets it caps. */
+  /* below 1080 there's less width — switch the hero to `contain` so the badge
+     scales down to fit and never overlaps the copy (still side-by-side). */
   @media (max-width:1080px){
+    header.hero{ background-size:contain; }
+    .hero .wrap{ padding:72px 22px 80px; }
+    .hcopy{ max-width:min(440px,46%); }
+  }
+  /* true phones: stack the badge above the text */
+  @media (max-width:820px){
     header.hero{ background-image:none; background:#000006; }
     .hero .wrap{ display:flex; flex-direction:column; padding:26px 22px 54px; }
     .hart{ display:flex; order:-1; justify-content:center; margin:0 calc(50% - 50vw) 2px; }
     .heroimg{ width:min(112vw,520px); max-width:none; }
     .hcopy{ max-width:100%; }
-  }
-  @media (max-width:820px){
     .prods{ grid-template-columns:1fr; }
     .feats{ grid-template-columns:repeat(2,1fr); }
     .docs{ grid-template-columns:1fr; }
