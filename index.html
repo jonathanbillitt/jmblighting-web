@@ -109,6 +109,23 @@
     scroll-snap-type:x mandatory; }
   .shots img{ height:440px; width:auto; border-radius:20px; border:1px solid var(--line);
     flex:none; scroll-snap-align:start; background:var(--card); }
+  /* DMX-analysis spotlight — the built-in analyser gets its own band */
+  .spotlight{ background:linear-gradient(135deg,#0f1c30,#12122a); }
+  .spotlight .row{ display:flex; gap:52px; align-items:center; flex-wrap:wrap; }
+  .spotlight .txt{ flex:1; min-width:300px; }
+  .spotlight .shot-one{ flex:none; }
+  .spotlight .shot-one img{ height:560px; width:auto; border-radius:22px;
+    border:1px solid var(--line); background:var(--card);
+    box-shadow:0 26px 70px rgba(0,0,0,.55); }
+  .eyebrow{ color:var(--cy); font-weight:700; font-size:13px; letter-spacing:.14em;
+    text-transform:uppercase; margin:0 0 10px; }
+  .ticks{ list-style:none; padding:0; margin:24px 0 0; display:flex;
+    flex-direction:column; gap:13px; }
+  .ticks li{ position:relative; padding-left:30px; color:var(--dim);
+    font-size:15.5px; line-height:1.5; text-align:left; }
+  .ticks li b{ color:var(--text); }
+  .ticks li::before{ content:"✓"; position:absolute; left:0; top:1px; color:var(--cy);
+    font-weight:800; }
   /* faq */
   .faq{ background:var(--card); border:1px solid var(--line); border-radius:12px;
     padding:0 18px; margin-bottom:12px; }
@@ -144,6 +161,9 @@
     .docs{ grid-template-columns:1fr; }
     .spectable th{ width:46%; }
     .shots img{ height:360px; }
+    .spotlight .row{ gap:30px; }
+    .spotlight .shot-one{ width:100%; text-align:center; }
+    .spotlight .shot-one img{ height:auto; width:min(320px,86%); }
     .contact .grid{ grid-template-columns:1fr; }
     nav .links a:not(.btn){ display:none; }
   }
@@ -157,6 +177,7 @@
     <a href="#features">Features</a>
     <a href="#specs">Specs</a>
     <a href="#app">The app</a>
+    <a href="#analysis">Analysis</a>
     <a href="#docs">Docs</a>
     <a href="#contact">Contact</a>
     <a class="btn" href="https://jonathanbillitt.github.io/jmb-zone-app/" target="_blank" rel="noopener">Open the app</a>
@@ -217,7 +238,37 @@
       <a class="btn" href="https://jonathanbillitt.github.io/jmb-zone-app/" target="_blank" rel="noopener">Open the app</a>
     </div>
   </div>
-</div><div class="shots"><img loading="lazy" src="app-control.png?v4" alt="Per-port control"><img loading="lazy" src="app-colour.png?v4" alt="Console-style colour picker"><img loading="lazy" src="app-ports.png?v4" alt="Live telemetry"><img loading="lazy" src="app-diag.png?v4" alt="DMX universe analyser"></div></div></section>
+</div><div class="shots"><img loading="lazy" src="app-control.png?v5" alt="Per-port control"><img loading="lazy" src="app-colour.png?v5" alt="Console-style colour picker"><img loading="lazy" src="app-ports.png?v5" alt="Live telemetry"><img loading="lazy" src="app-diag.png?v5" alt="DMX universe analyser"></div></div></section>
+
+<section class="spotlight" id="analysis"><div class="wrap"><div class="row">
+  <div class="shot-one">
+    <img loading="lazy" src="app-diag.png?v5"
+         alt="DMX universe analyser — every channel numbered with its live level">
+  </div>
+  <div class="txt">
+    <p class="eyebrow">DMX analysis &amp; universe health</p>
+    <h2>See the whole universe</h2>
+    <p class="sub">A full DMX analyser is built into every controller — so the box
+      that runs your light also tells you the truth about the signal driving it.
+      No laptop, no separate tester: it's in your pocket.</p>
+    <ul class="ticks">
+      <li><b>Universe monitor</b> — all 512 channels, numbered, each showing its
+        live level at a glance, so you can see exactly which channel is doing what.</li>
+      <li><b>Signal health</b> — frame rate, slot count, start code, packet age and
+        error counts, updating live, with an fps history graph.</li>
+      <li><b>Min/Max capture</b> — record the envelope of every channel across a take
+        to catch anything that moved when it shouldn't have.</li>
+      <li><b>Flicker finder</b> — logs every channel-level change on the wire: the
+        2&nbsp;a.m. ghost-flicker catcher, on-camera.</li>
+      <li><b>RDM tester</b> — discover and edit every fixture downstream — address,
+        personality, identify and sensors — like a dedicated RDM controller.</li>
+    </ul>
+    <div class="badges" style="margin-top:24px">
+      <span class="pill">Wired DMX · sACN · Art-Net</span>
+      <span class="pill">Full RDM (E1.20 / E1.37-1)</span>
+    </div>
+  </div>
+</div></div></section>
 
 <section id="docs" style="background:var(--bg2)"><div class="wrap">
   <h2>Documentation</h2>
