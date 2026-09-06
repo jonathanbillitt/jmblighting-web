@@ -1,10 +1,11 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>JMB Lighting — User Manual</title><style>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>JMB Lighting — User Manual</title><style>
 @page { size: A4; margin: 18mm 16mm; }
 body { font: 10.5pt/1.55 'Segoe UI', system-ui, sans-serif; color: #1a2230; max-width: 175mm; margin: 0 auto; }
 h1 { font-size: 21pt; color: #14203a; border-bottom: 3px solid #6a2cf5; padding-bottom: 6px; margin: 0 0 2px; }
 h1 + p { color: #667; margin-top: 2px; }
 h2 { font-size: 13.5pt; color: #2a1d66; margin: 22px 0 8px; border-bottom: 1px solid #d8d4ee; padding-bottom: 3px; }
 h3 { font-size: 11pt; color: #333; margin: 14px 0 6px; }
+h1, h2, h3 { scroll-margin-top: 64px; }  /* clear the sticky search bar when jumped to */
 table { border-collapse: collapse; width: 100%; margin: 8px 0 12px; font-size: 9.8pt; page-break-inside: avoid; }
 th { background: #eeeafb; color: #2a1d66; text-align: left; }
 th, td { border: 1px solid #cfc9e8; padding: 4px 8px; vertical-align: top; }
@@ -18,7 +19,18 @@ a { color: #4636b8; }
 blockquote { margin: 10px 0; padding: 6px 14px; border-left: 3px solid #b7ade6; background: #f7f5fd; color: #444; }
 .page-break { page-break-before: always; }
 .footer { margin-top: 26px; font-size: 8.5pt; color: #99a; text-align: center; }
+/* On-screen section search (hidden in the PDF). */
+#jmbsearch { position: sticky; top: 0; z-index: 50; background: #fff; padding: 10px 0 8px; margin: 0 0 8px; border-bottom: 1px solid #d8d4ee; }
+#jmbsearch input { width: 100%; box-sizing: border-box; font: 11pt 'Segoe UI', system-ui, sans-serif; padding: 9px 14px; border: 1.5px solid #b7ade6; border-radius: 9px; outline: none; }
+#jmbsearch input:focus { border-color: #6a2cf5; }
+#jmbsearch .jr { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid #d8d4ee; border-radius: 0 0 9px 9px; box-shadow: 0 10px 24px rgba(20,20,40,.14); max-height: 55vh; overflow: auto; }
+#jmbsearch .jrow { padding: 9px 14px; cursor: pointer; border-bottom: 1px solid #f0eef8; font-size: 10.5pt; color: #2a1d66; }
+#jmbsearch .jrow:last-child { border-bottom: 0; }
+#jmbsearch .jrow:hover, #jmbsearch .jrow.on { background: #f2eefc; }
+#jmbsearch .jrow small { color: #99a; font-size: 8.5pt; }
+@media print { #jmbsearch { display: none !important; } }
 </style></head><body>
+<div id="jmbsearch"><input type="search" placeholder="Search this manual — e.g. port bus" aria-label="Search this manual"><div class="jr"></div></div>
 <h1>JMB Lighting — User Manual</h1>
 <p>JMB one / 4our / 8ight · Firmware 2.x · 2026-08-20 · 4-port shown
 (1/8-port variants identical unless noted)</p>
@@ -117,18 +129,38 @@ names the winner: <strong>DMX</strong> or <strong>CRMX</strong>.</p>
 <p>The controller updates its own firmware straight over Bluetooth from the app —
 no USB, no cable, no Wi-Fi.</p>
 <ul>
-<li><strong>In the app</strong> (Setup → <em>Firmware update</em>): pick a <code>firmware.bin</code>, confirm,
-  and the app streams it to the controller over the Bluetooth link. A progress
-  bar tracks the transfer; outputs hold their last look throughout.</li>
-<li><strong>The image is checked before it runs</strong> (CRC verified end-to-end) and only
-  then made the next boot.</li>
-<li><strong>Automatic rollback.</strong> After an update the controller boots the new image on
-  probation: if it doesn't come up cleanly and confirm itself, the controller
-  falls back to the previous working firmware on its own. The app shows a
-  <em>confirming…</em> indicator during probation and <em>firmware confirmed</em> once the
-  new build has proven itself, so a bad flash can never brick the unit.</li>
+<li><strong>One button: Update Firmware</strong> (Setup → <em>Firmware update</em>). It is only
+  offered when there is actually something to install — otherwise it reads
+  <em>Firmware up to date</em>. When an update is waiting, the unlock screen says so as
+  you connect, so you find out before going looking. It updates everything the
+  unit runs, in one go. Outputs go dark for a few seconds part
+  way through, and the controller restarts into its new firmware at the end.
+  Nothing needs choosing and nothing needs finding — the firmware is published
+  alongside the app.
+  The firmware is published alongside the app, so there is no file to find and
+  no way to send a build meant for a different product. The card names the
+  version and build about to be installed, and the build the controller is
+  running, so you can see whether an update would change anything.</li>
+<li><strong>Checked twice before it runs.</strong> The app verifies the download's size and
+  checksum <em>before</em> opening a transfer, and the controller re-checks the
+  checksum across the Bluetooth link before the image is made bootable. A bad
+  download fails in a second rather than after a long upload.</li>
+<li><strong>Automatic rollback.</strong> The new image boots on probation: if it doesn't come
+  up cleanly and confirm itself, the controller returns to the previous working
+  firmware on its own. The app shows <em>confirming…</em> during probation and
+  <em>firmware confirmed</em> once the build has proven itself.</li>
+<li><strong>Manual rollback.</strong> <em>Roll back</em> returns everything to the previous firmware
+  deliberately — for a build that runs perfectly well but behaves wrongly,
+  which the automatic check cannot detect. The button stays greyed until there
+  is a previous version stored, which happens after your first update.</li>
+<li><strong>Do not power the unit off during an update.</strong> If one fails part way, the
+  unit keeps the firmware it already had — nothing is committed until it has
+  been checked — and it can simply be retried over Bluetooth.</li>
 </ul>
 <blockquote>
+<p>Keep the app open and the phone unlocked until an update finishes. Outputs
+hold their last look during a controller update; they go dark during a port
+module update.</p>
 <p>Wi-Fi / network DMX (sACN, Art-Net) and Wi-Fi OTA are not part of the
 shipping firmware — the control path is deliberately kept off the network for
 responsiveness. Wired DMX, CRMX and BLE cover input and updates.</p>
@@ -276,7 +308,10 @@ the wire. Each tool answers a specific question:</p>
 <ul>
 <li>
 <p><strong>Signal card</strong> — <em>Is a signal arriving, and is it healthy?</em> Shows whether a
-  signal is present and from where (<strong>wired DMX / sACN / Art-Net</strong>), its <strong>frame
+  signal is present and from where (<strong>DMX / CRMX / sACN / Art-Net</strong>). It reads
+  <strong>CRMX</strong> only when the radio is verifiably carrying the data; otherwise it
+  says simply <strong>DMX</strong>, because wired and wireless arrive on the same input and
+  the source is picked by the XLR socket itself, not by the controller, its <strong>frame
   rate</strong> with a rolling 90-second graph, <strong>slot count</strong>, <strong>start code</strong>, <strong>time
   since the last packet</strong>, alternate-start-code packet count, and <strong>error
   counts</strong>. Your first check that the desk is actually reaching the rig at a good
@@ -318,13 +353,48 @@ the wire. Each tool answers a specific question:</p>
 <h3>Setup — controller and housekeeping</h3>
 <p>Controller <strong>ID</strong> and <strong>Bluetooth name</strong> (what the pairing list shows), <strong>apply
 mode</strong> (how a change made to "All" fans out across the ports), <strong>CRMX wireless</strong>
-(link / unlink / antenna select — the status reads <strong>green when linked</strong>),
-<strong>Firmware update over Bluetooth</strong> (§2a), <strong>Flash to find</strong> (strobes this
-controller's screen for 3 s so you can pick it out of a rack — outputs
-untouched), <strong>Reset all ports</strong> with an <strong>Undo</strong>, <strong>show-file export / import</strong>
+(link / unlink / antenna select). The status distinguishes three things, because
+a CRMX pairing survives the transmitter being switched off: <strong>linked — no RF</strong>
+(amber) means paired but nothing is on air — transmitter off or out of range;
+<strong>linked — no data</strong> means the transmitter is present but isn't sending DMX; and
+<strong>linked · N Hz</strong> is a live stream,
+<strong>Firmware update over Bluetooth</strong> (§2a), <strong>Flash to find</strong> (identifies this
+controller for 5 s so you can pick it out of a rack: units with a front panel
+strobe their screen and leave the rig untouched; the screenless <strong>JMB one</strong>
+blinks its own outputs instead, being the only thing it can show you with), <strong>Reset all ports</strong> with an <strong>Undo</strong>, <strong>show-file export / import</strong>
 (one <strong>.jmb</strong> file carrying the whole rig — addresses, heads, labels, looks and
 scenes — reloadable on any phone or controller), <strong>change PIN</strong>, and
 <strong>Disconnect</strong>.</p>
+<p><strong>Test sequences</strong> (Setup, top of the tab) drive every port directly, overriding
+every source — <strong>live DMX included</strong> — until switched <strong>Off</strong>. A banner appears
+on the Control tab while a test runs, with its own <em>Stop test</em> button, and the
+<strong>Off</strong> button lights when nothing is running so you can tell at a glance.</p>
+<ul>
+<li><strong>Step RGBW</strong> — full drive red → green → blue → white, one second each, gamma
+  bypassed. Every channel at maximum and identical on all ports, so a dead
+  channel or a weak output stage stands out immediately.</li>
+<li><strong>Fade</strong> — a smooth rainbow sweep, for judging dimming smoothness and colour
+  blending.</li>
+</ul>
+<p><strong>The wiring check</strong> runs automatically during Step RGBW. Because that test
+lights one colour at a time, and each port measures its own current, the reading
+during each step <em>is</em> that channel's current. After one full four-second cycle
+the app lists them per port:</p>
+<p><code>Port 1:  R 1.90A · G 1.60A · B 1.50A · W 4.90A
+   ✓ consistent</code></p>
+<p>Colours legitimately differ — red's forward voltage is about a volt below green
+and blue — so the check only speaks up for unambiguous cases: an output drawing
+nothing, an output drawing markedly more than its siblings, or the two together,
+which means two colours are sharing a terminal (see §7). The figures stay on
+screen after you stop the test.</p>
+<p>The comparison is <strong>relative</strong>, channel against channel, so it works on a 10 cm
+off-cut as readily as a 10 m run, and the load does not have to be tape. Two
+consequences worth knowing: a reading of only a few milliamps is reported as
+<em>no measurable current</em> rather than "nothing connected" — the controller cannot
+tell a disconnected output from a very small load — and a port is only ever
+<strong>inhibited</strong> when there is enough current for the comparison to be beyond
+doubt. On a small bench load a crossed pair is reported but the port stays
+live.</p>
 <p><strong>Effects on tuneable-white ports.</strong> On a CW/WW personality the effect list only
 offers the effects that read on a white strip (Candle, Fire, Lightning, TV Sim,
 Strobe, Pulse, Fluoro, Paparazzi, Explosion); the colour-only effects are hidden
@@ -339,6 +409,20 @@ learning the app or showing it off before the hardware is in front of you.</p>
 µs trip, over-temperature, ground-leak imbalance, comms-loss failsafe.
 Latched ports show a flashing fault banner on their screen, the fault word
 appears in the menu and the app, and Clear Faults / Port Reset re-arms.</p>
+<p><strong>Wiring fault.</strong> Separate from the electrical faults above, and raised by the
+controller rather than the port. Running <strong>Step RGBW</strong> measures each output's
+current one colour at a time; if one output draws roughly double while another
+draws nothing, two colours are almost certainly sharing a terminal. The port is
+<strong>inhibited</strong> and both the panel and the app name the pair — <em>P1 WIRE R+B</em> means
+the blue load is on the red terminal.</p>
+<p>This matters because it is the one wiring mistake the port's own protection
+cannot see: the current still leaves and returns through the same loop, so
+over-current and ground-leak detection are both satisfied while one output
+quietly carries two channels' worth. <strong>Clear Faults</strong> on the panel, or <em>Clear
+wiring fault &amp; re-enable</em> in the app, restores the port; if the wiring is still
+crossed it latches again the next time you run the test. An output with simply
+<em>nothing</em> connected is reported but never inhibits a port — a tuneable-white
+fixture legitimately has an unused output.</p>
 <p><strong>Thermal foldback</strong> (Setup → Thermal Fold, on by default): before a port hits
 its over-temp trip, it eases the output down over the last 10 °C (to a 30 %
 floor) so a hot fixture <em>rides through</em> instead of hard-latching mid-show. The
@@ -408,4 +492,32 @@ only the flicker frequency changes.</p>
   on either rail; at 12 V each port delivers half the wattage for the same
   current limit</li>
 </ul>
+<script>
+(function(){
+  var box=document.getElementById('jmbsearch'), inp=box.querySelector('input'),
+      res=box.querySelector('.jr'),
+      heads=[].slice.call(document.querySelectorAll('h1,h2,h3'));
+  heads.forEach(function(h,i){ if(!h.id) h.id='sec'+i; });
+  function flash(el){ var o=el.style.backgroundColor; el.style.transition='background-color .25s';
+    el.style.backgroundColor='#fff3b0'; setTimeout(function(){el.style.backgroundColor=o||'';},1000); }
+  function go(el,block){ el.scrollIntoView({behavior:'smooth',block:block||'start'}); flash(el); res.innerHTML=''; }
+  function row(text,tag,fn){ var d=document.createElement('div'); d.className='jrow';
+    d.innerHTML=text+(tag?' <small>'+tag+'</small>':''); d.onclick=fn; res.appendChild(d); return d; }
+  function render(q){ res.innerHTML=''; if(!q) return;
+    var ql=q.toLowerCase();
+    var m=heads.filter(function(h){return h.textContent.toLowerCase().indexOf(ql)>-1;});
+    if(m.length){ m.slice(0,15).forEach(function(h){ row(h.textContent, h.tagName.toLowerCase(),
+        function(){go(h,'start');}); }); return; }
+    var all=[].slice.call(document.querySelectorAll('p,li,td,th'));
+    var hit=null; for(var i=0;i<all.length;i++){ if(all[i].textContent.toLowerCase().indexOf(ql)>-1){hit=all[i];break;} }
+    if(hit) row('Go to first match','in text',function(){go(hit,'center');});
+    else row('No match','',function(){});
+  }
+  inp.addEventListener('input',function(){render(inp.value.trim());});
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){ var f=res.querySelector('.jrow'); if(f) f.click(); e.preventDefault(); }
+    else if(e.key==='Escape'){ inp.value=''; res.innerHTML=''; inp.blur(); } });
+})();
+</script>
+
 </body></html>
