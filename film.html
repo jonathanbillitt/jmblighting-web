@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>JMB Lighting — flicker-free LED control for film &amp; TV</title>
+<meta name="description" content="Compact DMX, CRMX and Bluetooth LED controllers built for film, TV and broadcast — flicker-free 16-bit dimming, microsecond protection and full RDM. Run the rig and read its health from your phone. No cloud, no account.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jmblighting.co.uk/film.html">
+<meta property="og:site_name" content="JMB Lighting">
+<meta property="og:title" content="JMB Lighting — flicker-free LED control for film &amp; TV">
+<meta property="og:description" content="Compact DMX, CRMX and Bluetooth LED controllers for film, TV and broadcast — flicker-free 16-bit dimming, microsecond protection and full RDM.">
+<meta property="og:image" content="https://jmblighting.co.uk/jmb-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JMB Lighting">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JMB Lighting — flicker-free LED control for film &amp; TV">
+<meta name="twitter:description" content="DMX, CRMX and Bluetooth LED controllers for film, TV and broadcast.">
+<meta name="twitter:image" content="https://jmblighting.co.uk/jmb-og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Crect%20width%3D%27100%27%20height%3D%27100%27%20rx%3D%2722%27%20fill%3D%27%2314142c%27/%3E%3Crect%20x%3D%2718%27%20y%3D%2719%27%20width%3D%2764%27%20height%3D%279%27%20rx%3D%271.5%27%20fill%3D%27%238b5cf6%27/%3E%3Crect%20x%3D%2718%27%20y%3D%2772%27%20width%3D%2764%27%20height%3D%279%27%20rx%3D%271.5%27%20fill%3D%27%238b5cf6%27/%3E%3Ctext%20x%3D%2750%27%20y%3D%2763%27%20font-family%3D%27Segoe%20UI%2CArial%2Csans-serif%27%20font-weight%3D%27800%27%20font-size%3D%2734%27%20fill%3D%27%235fd7ff%27%20text-anchor%3D%27middle%27%3EJMB%3C/text%3E%3C/svg%3E">
+<style>
+  :root{ --bg:#0b0b16; --bg2:#12122a; --card:#15162b; --line:#262742;
+          --text:#ececf6; --dim:#9a9ac2; --pur:#6a2cf5; --pur2:#c53cff; --cy:#5fd7ff; }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; overflow-x:hidden; }
+  body{ margin:0; background:var(--bg); color:var(--text);
+    font:16px/1.6 system-ui,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  /* tidy, justified body paragraphs (newspaper-column feel across the cards) */
+  p{ text-align:justify; -webkit-hyphens:auto; hyphens:auto; }
+  a{ color:var(--cy); text-decoration:none; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 22px; }
+  .beam{ height:5px; background:linear-gradient(90deg,#ff4d5e,#ffb02e,#3fe08a,#3ba7ff,#8b5cf6,#ff4d9d); }
+  .announce{ background:linear-gradient(90deg,#1a1140,#241452); border-bottom:1px solid var(--line);
+    color:var(--dim); font-size:13.5px; text-align:center; padding:9px 22px; }
+  .announce a{ color:var(--cy); font-weight:600; white-space:nowrap; }
+  /* nav */
+  nav{ position:sticky; top:0; z-index:9; backdrop-filter:blur(10px);
+    background:rgba(11,11,22,.82); border-bottom:1px solid var(--line); }
+  nav .wrap{ display:flex; align-items:center; gap:18px; height:62px; }
+  nav .links{ margin-left:auto; display:flex; gap:22px; align-items:center; }
+  nav .links a{ color:var(--dim); font-size:14.5px; }
+  nav .links a:hover{ color:var(--text); }
+  .btn{ display:inline-block; background:linear-gradient(135deg,var(--pur2),var(--pur));
+    color:#fff; padding:11px 20px; border-radius:10px; font-weight:600; font-size:15px; }
+  .btn.ghost{ background:transparent; border:1px solid var(--line); color:var(--text); }
+  .btn:hover{ filter:brightness(1.08); }
+  /* hero */
+  header.hero{ position:relative; overflow:hidden; background:#000006;
+    background-image:linear-gradient(90deg,#000006 30%,rgba(0,0,6,.4) 52%,rgba(0,0,6,0) 68%), url('jmb-hero.png?v8');
+    background-repeat:no-repeat; background-position:right center; background-size:cover; }
+  .hero .wrap{ padding:96px 22px 104px; position:relative; }
+  .prod .pmark{ justify-content:center; }
+  .hcopy{ max-width:min(500px,50%); position:relative; z-index:1; }
+  .hart{ display:none; }
+  .heroimg{ width:min(112vw,112vh); max-width:330px; height:auto; mix-blend-mode:screen; }
+  .hero h1{ font-size:clamp(30px,5.2vw,52px); line-height:1.08; margin:0 0 16px;
+    letter-spacing:-.5px; max-width:16ch; }
+  .hero h1 .g{ background:linear-gradient(90deg,var(--cy),var(--pur2));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p.lead{ font-size:clamp(17px,2.3vw,21px); color:var(--dim); max-width:56ch; margin:0 0 30px; }
+  .cta{ display:flex; gap:14px; flex-wrap:wrap; }
+  section{ padding:74px 0; }
+  section h2{ font-size:clamp(24px,3.4vw,34px); margin:0 0 8px; letter-spacing:-.4px; }
+  section .sub{ color:var(--dim); margin:0 0 40px; font-size:18px; max-width:60ch; }
+  /* products */
+  .prods{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .prod{ background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:26px 24px; transition:border-color .2s, transform .2s; }
+  .prod:hover{ border-color:var(--pur); transform:translateY(-3px); }
+  .prod .pmark{ color:#fff; margin-bottom:18px; min-height:56px; display:flex; align-items:center; }
+  .prod .pports{ display:inline-block; font-size:13px; font-weight:600; color:var(--cy);
+    background:rgba(95,215,255,.10); border:1px solid rgba(95,215,255,.25);
+    padding:3px 10px; border-radius:999px; margin-bottom:12px; }
+  .prod p{ margin:0; color:var(--dim); font-size:15px; }
+  /* features */
+  .feats{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .feat{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; }
+  .feat .fi{ font-size:26px; margin-bottom:10px; }
+  .feat h3{ font-size:16.5px; margin:0 0 6px; }
+  .feat p{ margin:0; color:var(--dim); font-size:14px; }
+  /* app band */
+  .appband{ background:linear-gradient(135deg,#1a1140,#12122a);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .appband .row{ display:flex; gap:44px; align-items:center; flex-wrap:wrap; }
+  .appband .txt{ flex:1; min-width:280px; }
+  .appband .badges{ display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .pill{ font-size:13px; color:var(--dim); border:1px solid var(--line);
+    padding:6px 12px; border-radius:999px; background:rgba(255,255,255,.02); }
+  /* docs */
+  .docs{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .doc{ background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:26px 24px; transition:border-color .2s, transform .2s; }
+  .doc:hover{ border-color:var(--pur); transform:translateY(-3px); }
+  .doc .di{ font-size:26px; margin-bottom:12px; }
+  .doc h3{ font-size:18px; margin:0 0 6px; }
+  .doc p{ margin:0 0 18px; color:var(--dim); font-size:14.5px; }
+  .doc .dlinks{ display:flex; gap:10px; flex-wrap:wrap; }
+  .doc .dlinks a{ font-size:14px; padding:9px 16px; }
+  /* specs */
+  .spectable{ width:100%; border-collapse:collapse; font-size:15px; }
+  .spectable th, .spectable td{ text-align:left; padding:12px 4px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .spectable th{ color:var(--text); font-weight:600; width:34%; padding-right:20px; }
+  .spectable td{ color:var(--dim); }
+  .spectable tr:last-child th, .spectable tr:last-child td{ border-bottom:none; }
+  /* app screenshots */
+  .shots{ display:flex; gap:16px; overflow-x:auto; padding:6px 0 10px; margin-top:30px;
+    scroll-snap-type:x mandatory; }
+  .shots img{ height:440px; width:auto; border-radius:20px; border:1px solid var(--line);
+    flex:none; scroll-snap-align:start; background:var(--card); }
+  /* DMX-analysis spotlight — the built-in analyser gets its own band */
+  .spotlight{ background:linear-gradient(135deg,#0f1c30,#12122a); }
+  .spotlight .row{ display:flex; gap:52px; align-items:center; flex-wrap:wrap; }
+  .spotlight .txt{ flex:1; min-width:300px; }
+  .spotlight .shot-one{ flex:none; }
+  .spotlight .shot-one img{ height:560px; width:auto; border-radius:22px;
+    border:1px solid var(--line); background:var(--card);
+    box-shadow:0 26px 70px rgba(0,0,0,.55); }
+  .eyebrow{ color:var(--cy); font-weight:700; font-size:13px; letter-spacing:.14em;
+    text-transform:uppercase; margin:0 0 10px; }
+  .ticks{ list-style:none; padding:0; margin:24px 0 0; display:flex;
+    flex-direction:column; gap:13px; }
+  .ticks li{ position:relative; padding-left:30px; color:var(--dim);
+    font-size:15.5px; line-height:1.5; text-align:left; }
+  .ticks li b{ color:var(--text); }
+  .ticks li::before{ content:"✓"; position:absolute; left:0; top:1px; color:var(--cy);
+    font-weight:800; }
+  /* faq */
+  .faq{ background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:0 18px; margin-bottom:12px; }
+  .faq summary{ cursor:pointer; padding:16px 0; font-weight:600; font-size:16px;
+    list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary::after{ content:"+"; color:var(--cy); font-size:22px; font-weight:400; }
+  .faq[open] summary::after{ content:"–"; }
+  .faq p{ margin:0 0 18px; color:var(--dim); font-size:15px; }
+  /* contact */
+  .contact .grid{ display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:stretch; }
+  .contact .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:26px; }
+  .contact dt{ color:var(--dim); font-size:13px; margin-top:14px; }
+  .contact dd{ margin:2px 0 0; font-weight:500; }
+  footer{ border-top:1px solid var(--line); color:var(--dim); font-size:13.5px; }
+  footer .wrap{ padding:34px 22px; display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between; }
+  /* 820–1080: keep the full-bleed one-image hero (badge behind, extending to the
+     edges and down to the beam — no visible edges); just narrow the copy so it
+     sits over the dark left, clear of the bright badge. */
+  @media (max-width:1080px){
+    .hero .wrap{ padding:74px 22px 82px; }
+    .hcopy{ max-width:min(360px,42%); }
+  }
+  /* true phones: stack the badge above the text */
+  @media (max-width:820px){
+    header.hero{ background-image:none; background:#000006; }
+    .hero .wrap{ display:flex; flex-direction:column; padding:26px 22px 54px; }
+    .hart{ display:flex; order:-1; justify-content:center; margin:0 calc(50% - 50vw) 2px; }
+    .heroimg{ width:min(112vw,520px); max-width:none; }
+    .hcopy{ max-width:100%; }
+    .prods{ grid-template-columns:1fr; }
+    .feats{ grid-template-columns:repeat(2,1fr); }
+    .docs{ grid-template-columns:1fr; }
+    .spectable th{ width:46%; }
+    .shots img{ height:360px; }
+    .spotlight .row{ gap:30px; }
+    .spotlight .shot-one{ width:100%; text-align:center; }
+    .spotlight .shot-one img{ height:auto; width:min(320px,86%); }
+    .contact .grid{ grid-template-columns:1fr; }
+    nav .links a:not(.btn){ display:none; }
+  }
+
+  /* film header (preview) */
+  .filmhead{ position:relative; background:#000006; }
+  .filmhead video{ display:block; width:100%; height:auto; max-height:calc(100vh - 56px); aspect-ratio:16/9;
+    object-fit:contain; background:#000006; }
+  .filmhead .replay{ position:absolute; right:18px; bottom:16px; display:none; font:600 14px/1 system-ui,sans-serif;
+    color:#e6edf3; background:rgba(14,17,22,.72); border:1px solid rgba(230,237,243,.25); border-radius:999px;
+    padding:9px 14px; cursor:pointer; }
+  .filmhead.ended .replay{ display:block; }
+  header.hero.under{ background-image:none; background:#000006; }
+  header.hero.under .hart{ display:none; }
+  header.hero.under .wrap{ padding-top:48px; }
+</style></head>
+<body>
+
+<nav><div class="wrap">
+  <a href="#top" aria-label="JMB Lighting"><svg viewBox="0 0 190 164" preserveAspectRatio="xMinYMid meet" aria-hidden="true" style="height:30px;width:auto;display:block;vertical-align:middle"><defs><linearGradient id="jmbP" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c53cff"/><stop offset="1" stop-color="#6a2cf5"/></linearGradient><linearGradient id="jmbC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd7ff"/><stop offset="1" stop-color="#1f8fe0"/></linearGradient></defs><rect x="0" y="0" width="190" height="24" fill="url(#jmbP)"/><rect x="0" y="140" width="190" height="24" fill="url(#jmbP)"/><text x="95" y="112.1" text-anchor="middle" dominant-baseline="alphabetic" fill="url(#jmbC)" font-family="system-ui,Segoe UI,Roboto,Arial,sans-serif" font-weight="800" font-size="86" letter-spacing="1">JMB</text></svg></a>
+  <div class="links">
+    <a href="#products">Products</a>
+    <a href="#features">Features</a>
+    <a href="#specs">Specs</a>
+    <a href="#app">The app</a>
+    <a href="#analysis">Analysis</a>
+    <a href="#docs">Docs</a>
+    <a href="#contact">Contact</a>
+    <a class="btn" href="https://app.jmblighting.co.uk/" target="_blank" rel="noopener">Open the app</a>
+  </div>
+</div></nav>
+
+<div class="announce">In development — not yet available for sale.
+  <a href="mailto:hello@jmblighting.co.uk?subject=JMB%20Lighting%20%E2%80%94%20register%20interest">Register your interest &rarr;</a></div>
+
+<div class="filmhead" id="film"><video id="filmv" src="jmb-film.mp4?v=1" poster="jmb-film-poster.jpg?v=1" autoplay muted playsinline preload="auto"></video><button class="replay" type="button" onclick="var v=document.getElementById('filmv');this.parentNode.classList.remove('ended');v.currentTime=0;v.play()">&#8635; Replay</button></div>
+<script>document.getElementById("filmv").addEventListener("ended",function(){this.parentNode.classList.add("ended")});</script>
+<header class="hero under" id="top"><div class="wrap">
+  <div class="hcopy">
+    <h1>LED lighting control that holds up <span class="g">on camera</span>.</h1>
+    <p class="lead">JMB Lighting builds compact DMX, CRMX and Bluetooth LED
+      controllers for film, TV and broadcast — flicker-free 16-bit dimming,
+      protection measured in microseconds, and full RDM. Rig it, run it and read
+      its health from your phone. No cloud, no account.</p>
+    <div class="cta">
+      <a class="btn" href="https://app.jmblighting.co.uk/" target="_blank" rel="noopener">Open the app</a>
+      <a class="btn ghost" href="#products">See the range</a>
+    </div>
+  </div>
+  <div class="hart"><img class="heroimg" src="jmb-splash.png" width="640" height="640"
+    loading="lazy" alt="JMB Lighting — neon logo"></div>
+</div></header>
+<div class="beam"></div>
+
+<section id="products"><div class="wrap">
+  <h2>The range</h2>
+  <p class="sub">One control app, three sizes — a single output, a four-port workhorse, or a full eight-port rack.</p>
+  <div class="prods"><div class="prod"><div class="pmark"><svg viewBox="0 0 332 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><rect x="0" y="0" width="332" height="24" fill="currentColor"/><rect x="0" y="140" width="332" height="24" fill="currentColor"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><polygon points="0.00,32.00 48.00,32.00 48.00,48.00 28.84,80.00 48.00,80.00 48.00,96.00 0.00,96.00 0.00,80.00 19.16,48.00 0.00,48.00" fill="currentColor" stroke="none"/></g><g transform="translate(50,0)" stroke="currentColor"><circle cx="52" cy="48" r="44"/></g><g transform="translate(156,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 40 A32 32 0 0 1 72 40"/><path d="M72 40 V96"/></g><g transform="translate(238,0)" stroke="currentColor"><path d="M12.84 70.37 L79.16 25.63"/><path d="M79.16 25.63 A40 40 0 1 0 84.04 60.36"/><circle cx="12.84" cy="70.37" r="8" fill="currentColor" stroke="none"/><circle cx="79.16" cy="25.63" r="8" fill="currentColor" stroke="none"/><polygon points="91.65,62.83 76.43,57.89 76.43,62.83" fill="currentColor" stroke="none"/></g></g></svg></div><div class="pmeta"><span class="pports">1 port</span><p>Single-output controller for a hero fixture, a practical or a strip — the whole engine in the smallest box.</p></div></div><div class="prod"><div class="pmark"><svg viewBox="0 0 318 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><rect x="0" y="0" width="318" height="24" fill="currentColor"/><rect x="0" y="140" width="318" height="24" fill="currentColor"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><rect x="12" y="0" width="16" height="96" fill="currentColor" stroke="none"/><polygon points="20,0 29.67,0 56.60,39.50 37.26,39.50 13.40,4.50" fill="currentColor" stroke="none"/><path d="M0 64 H72"/></g><g transform="translate(74,0)" stroke="currentColor"><circle cx="48" cy="48" r="40"/></g><g transform="translate(172,0)" stroke="currentColor"><path d="M8 0 V56"/><path d="M8 56 A32 32 0 0 0 72 56"/><path d="M72 0 V96"/></g><g transform="translate(254,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 48 A40 40 0 0 1 59.69 9.75"/></g></g></svg></div><div class="pmeta"><span class="pports">4 ports</span><p>Four independent outputs — the everyday rig controller for a set, a stage or a studio floor.</p></div></div><div class="prod"><div class="pmark"><svg viewBox="0 0 318 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><mask id="desc-am-eight" maskUnits="userSpaceOnUse" x="0" y="140" width="318" height="24"><rect x="0" y="140" width="318" height="24" fill="white"/><g transform="translate(107,34) scale(1)" fill="none" stroke="black" stroke-width="32" stroke-linecap="square" stroke-linejoin="miter"><path d="M64 60 V82 L22 116"/></g></mask><rect x="0" y="0" width="318" height="24" fill="currentColor"/><rect x="0" y="140" width="318" height="24" fill="currentColor" mask="url(#desc-am-eight)"/><g transform="translate(19,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><circle cx="32" cy="24" r="16"/><path d="M52.78 52.00 A24 24 0 1 1 32 40"/></g><g transform="translate(60,0)" stroke="currentColor"><path d="M16 24 V96"/><rect x="6" y="1" width="20" height="20" fill="currentColor" stroke="none"/></g><g transform="translate(88,0)" stroke="currentColor"><circle cx="36" cy="60" r="28"/><path d="M64 60 V82 L22 116"/></g><g transform="translate(164,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 60 A28 28 0 0 1 64 60 V96"/></g><g transform="translate(224,0)" stroke="currentColor"><path d="M28 4 V78 A18 18 0 0 0 52 94"/><path d="M8 24 H48"/></g></g></svg></div><div class="pmeta"><span class="pports">8 ports</span><p>Eight outputs from one box — for larger builds, standing sets and touring racks.</p></div></div></div>
+</div></section>
+
+<section id="features" style="background:var(--bg2)"><div class="wrap">
+  <h2>Built for the set</h2>
+  <p class="sub">The things that matter when the camera's rolling: clean light, control you can trust, and a rig that tells you the truth about its state.</p>
+  <div class="feats"><div class="feat"><div class="fi">🎥</div><h3>Flicker-free on camera</h3><p>High-frequency PWM with 16-bit, dithered dimming — no banding on camera, and fades that stay smooth with no visible stepping.</p></div><div class="feat"><div class="fi">🛡️</div><h3>Protection in microseconds</h3><p>Per-port over-current is caught in microseconds — faster than a fuse or a PSU surge — with short and thermal foldback that rides through a fault instead of just tripping.</p></div><div class="feat"><div class="fi" style="width:auto"><img src="crmx-lumenradio.png" alt="CRMX by LumenRadio" style="height:34px;width:auto;display:block;vertical-align:top"></div><h3>DMX, CRMX &amp; RDM</h3><p>Wired DMX or CRMX wireless (LumenRadio), with full RDM — discovery, remote addressing and sensor feedback from the desk.</p></div><div class="feat"><div class="fi">🎬</div><h3>21 film-ready effects</h3><p>Fire, candle, lightning, TV glow, passing headlights, faulty fluorescent, paparazzi and more — with rig-wide tempo and spread.</p></div><div class="feat"><div class="fi">🎨</div><h3>Per-port colour &amp; curves</h3><p>RGB or tuneable white on every output, with a Hue/Sat/Kelvin picker, dimmer curves and per-channel trim.</p></div><div class="feat"><div class="fi">📈</div><h3>Live telemetry</h3><p>Per-port current — calibrated to within 1% of a bench meter — plus temperature, faults and source, so the rig tells you the truth about its state.</p></div><div class="feat"><div class="fi">🔬</div><h3>DMX analysis &amp; universe health</h3><p>A full analyser built in — live signal stats (fps, slots, errors), a numbered channel-by-channel universe view with min/max capture, a flicker finder, and an RDM tester for every fixture downstream.</p></div><div class="feat"><div class="fi"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="#5fd7ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:top" aria-label="Bluetooth"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg></div><h3>Runs from your phone</h3><p>Set up and run everything over Bluetooth. The control path never touches a network: no cloud, no account, no tracking.</p></div><div class="feat"><div class="fi">⬆️</div><h3>Wireless updates</h3><p>Firmware straight over Bluetooth, with automatic rollback if a build ever misbehaves.</p></div></div>
+</div></section>
+
+<section id="specs"><div class="wrap">
+  <h2>Specifications</h2>
+  <p class="sub">Indicative — the platform is in development, so some figures may firm up before release.</p>
+  <table class="spectable"><tbody><tr><th>Outputs</th><td>1 / 4 / 8 independent, depending on model</td></tr><tr><th>Output type</th><td>RGB or tuneable white (RGBW / CW-WW) per port</td></tr><tr><th>Current</th><td>Up to ~6.5&nbsp;A per output — configurable per-port limit</td></tr><tr><th>Dimming</th><td>16-bit, temporally dithered</td></tr><tr><th>PWM frequency</th><td>8 / 20 / 62.5&nbsp;kHz (camera) — selectable per port</td></tr><tr><th>Wired &amp; wireless in</th><td>DMX512 (5-pin) · CRMX (LumenRadio) · full RDM (E1.20 / E1.37-1)</td></tr><tr><th>App control</th><td>Bluetooth&nbsp;LE via the web app — no account, no cloud</td></tr><tr><th>Effects</th><td>21 built-in dynamic looks, with rig-wide tempo &amp; spread</td></tr><tr><th>Protection</th><td>Per-port over-current (µs trip), short, thermal foldback, ground-fault, comms failsafe</td></tr><tr><th>Telemetry</th><td>Per-port current (±1%), temperature, faults, source</td></tr><tr><th>Front panel</th><td>Rotary encoder + OLED on 4our &amp; 8ight; Zone is app-only</td></tr><tr><th>Firmware updates</th><td>Wireless over Bluetooth, with automatic rollback</td></tr><tr><th>Power</th><td>Built-in PSU on 4our &amp; 8ight; Zone runs from a 12&nbsp;V or 24&nbsp;V PSU or a battery pack</td></tr><tr><th>Made in</th><td>United Kingdom</td></tr></tbody></table>
+</div></section>
+
+<section class="appband" id="app"><div class="wrap"><div class="row">
+  <div class="txt">
+    <h2>Your rig, in your pocket</h2>
+    <p class="sub" style="margin-bottom:0">The companion app talks straight to the
+      controller over Bluetooth — set DMX addresses, mix colour, fire effects, save
+      scenes and watch live telemetry. It collects nothing and needs no sign-in.</p>
+    <div class="badges">
+      <span class="pill">No account</span><span class="pill">No cloud</span>
+      <span class="pill">No tracking</span><span class="pill">Works offline</span>
+      <span class="pill">Camera-safe dimming</span>
+      <span class="pill">Wireless firmware updates</span>
+    </div>
+    <div class="cta" style="margin-top:26px">
+      <a class="btn" href="https://app.jmblighting.co.uk/" target="_blank" rel="noopener">Open the app</a>
+    </div>
+  </div>
+</div><div class="shots"><img loading="lazy" src="app-control.png?v5" alt="Per-port control"><img loading="lazy" src="app-colour.png?v5" alt="Console-style colour picker"><img loading="lazy" src="app-ports.png?v5" alt="Live telemetry"><img loading="lazy" src="app-diag.png?v5" alt="DMX universe analyser"></div></div></section>
+
+<section class="spotlight" id="analysis"><div class="wrap"><div class="row">
+  <div class="shot-one">
+    <img loading="lazy" src="app-diag.png?v5"
+         alt="DMX universe analyser — every channel numbered with its live level">
+  </div>
+  <div class="txt">
+    <p class="eyebrow">DMX analysis &amp; universe health</p>
+    <h2>See the whole universe</h2>
+    <p class="sub">A full DMX analyser is built into every controller — so the box
+      that runs your light also tells you the truth about the signal driving it.
+      No laptop, no separate tester: it's in your pocket.</p>
+    <ul class="ticks">
+      <li><b>Universe monitor</b> — all 512 channels, numbered, each showing its
+        live level at a glance, so you can see exactly which channel is doing what.</li>
+      <li><b>Signal health</b> — frame rate, slot count, start code, packet age and
+        error counts, updating live, with an fps history graph.</li>
+      <li><b>Min/Max capture</b> — record the envelope of every channel across a take
+        to catch anything that moved when it shouldn't have.</li>
+      <li><b>Flicker finder</b> — logs and timestamps every channel-level change
+        on the wire, so an intermittent or unexplained flicker is caught and
+        pinned down instead of guessed at.</li>
+      <li><b>RDM tester</b> — discover and edit every fixture downstream — address,
+        personality, identify and sensors — like a dedicated RDM controller.</li>
+    </ul>
+    <div class="badges" style="margin-top:24px">
+      <span class="pill">Wired DMX · sACN · Art-Net</span>
+      <span class="pill">Full RDM (E1.20 / E1.37-1)</span>
+    </div>
+  </div>
+</div></div></section>
+
+<section id="docs" style="background:var(--bg2)"><div class="wrap">
+  <h2>Documentation</h2>
+  <p class="sub">Everything you need to patch and run the rig — read online or download the PDF.</p>
+  <div class="docs">
+    <div class="doc">
+      <div class="di">📘</div>
+      <h3>User Manual</h3>
+      <p>Front panel, sources, the 21 effects, global addressing, RDM, the app,
+         fault handling and camera / slow-motion setup.</p>
+      <div class="dlinks">
+        <a class="btn" href="manual.html" target="_blank" rel="noopener">Read online</a>
+        <a class="btn ghost" href="manual.pdf" target="_blank" rel="noopener">PDF</a>
+      </div>
+    </div>
+    <div class="doc">
+      <div class="di">🎛️</div>
+      <h3>DMX Personality Chart</h3>
+      <p>Every personality and footprint, the FX 10-channel layout, all 21
+         effect ranges on channel 8, sources and RDM.</p>
+      <div class="dlinks">
+        <a class="btn" href="dmx-chart.html" target="_blank" rel="noopener">Read online</a>
+        <a class="btn ghost" href="dmx-chart.pdf" target="_blank" rel="noopener">PDF</a>
+      </div>
+    </div>
+    <div class="doc">
+      <div class="di">&#9888;&#65039;</div>
+      <h3>Safety Guide</h3>
+      <p>Safe operation: electrical safety, fusing, load limits, strobe and
+         infrared warnings, installation practice and disposal.</p>
+      <div class="dlinks">
+        <a class="btn" href="safety.html" target="_blank" rel="noopener">Read online</a>
+        <a class="btn ghost" href="safety.pdf" target="_blank" rel="noopener">PDF</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="faq" style="background:var(--bg2)"><div class="wrap">
+  <h2>FAQ</h2>
+  <details class="faq"><summary>Does it take standard DMX and CRMX?</summary><p>Yes — DMX512 in on 5-pin, or CRMX wireless (LumenRadio), with full RDM for remote addressing, personality and sensor feedback. It drops into whatever's already running the rig.</p></details><details class="faq"><summary>Do I need the app, or an account?</summary><p>The app is optional. Set up and run everything over Bluetooth with no account and no cloud — or use the front-panel encoder and screen. Nothing is collected.</p></details><details class="faq"><summary>iPhone or Android?</summary><p>Chrome or Edge on Android and desktop. On iPhone, use the Bluefy browser (both use Web&nbsp;Bluetooth). Add it to your home screen to run it like an app.</p></details><details class="faq"><summary>Is it really flicker-free on camera?</summary><p>Yes — high-frequency PWM up to 62.5&nbsp;kHz with 16-bit dithered dimming, so the output stays clean through high-speed capture and slow-motion.</p></details><details class="faq"><summary>When can I buy one?</summary><p>It's in development. Register your interest and we'll let you know the moment it's ready.</p></details>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+  <h2>Get in touch</h2>
+  <p class="sub">Speccing a rig for a shoot or an install? Tell us what you're lighting.</p>
+  <div class="grid">
+    <div class="card">
+      <p style="margin-top:0">We're a UK maker building lighting control for film,
+        TV and live production — quick to rig, honest about its state, and clean
+        on camera. Tell us what you're shooting and we'll point you at the right
+        controller.</p>
+      <a class="btn" href="mailto:hello@jmblighting.co.uk">Email us</a>
+    </div>
+    <div class="card">
+      <dl style="margin:0">
+        <dt>Sales &amp; enquiries</dt><dd><a href="mailto:hello@jmblighting.co.uk">hello@jmblighting.co.uk</a></dd>
+        <dt>Support</dt><dd><a href="mailto:support@jmblighting.co.uk">support@jmblighting.co.uk</a></dd>
+        <dt>Accounts</dt><dd><a href="mailto:accounts@jmblighting.co.uk">accounts@jmblighting.co.uk</a></dd>
+        <dt>Company</dt><dd>JMB Lighting Ltd</dd>
+        <dt>Made in</dt><dd>United Kingdom</dd>
+      </dl>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div>© JMB Lighting Ltd. All rights reserved.</div>
+  <div><a href="#top">Back to top</a> &nbsp;·&nbsp;
+    <a href="https://app.jmblighting.co.uk/" target="_blank" rel="noopener">Companion app</a></div>
+  <div style="flex-basis:100%; margin-top:14px"><img src="lumenradio-logo.png" alt="LumenRadio" style="height:22px;width:auto;opacity:.85"></div>
+  <div style="flex-basis:100%; margin-top:14px; font-size:12px; line-height:1.5; color:#6b6b8a">
+    This site sets no cookies and collects nothing. CRMX™ is a trademark of LumenRadio
+    AB. The Bluetooth® word mark and logos are registered trademarks owned by Bluetooth
+    SIG, Inc. All other trademarks are the property of their respective owners.</div>
+</div></footer>
+
+</body></html>
