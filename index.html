@@ -167,6 +167,18 @@
     .contact .grid{ grid-template-columns:1fr; }
     nav .links a:not(.btn){ display:none; }
   }
+/*FILM*/
+  .filmhead{ position:relative; background:#000006; }
+  .filmhead video{ display:block; width:100%; height:auto; max-height:calc(100vh - 56px); aspect-ratio:16/9;
+    object-fit:contain; background:#000006; }
+  .filmhead .replay{ position:absolute; right:18px; bottom:16px; display:none; font:600 14px/1 system-ui,sans-serif;
+    color:#e6edf3; background:rgba(14,17,22,.72); border:1px solid rgba(230,237,243,.25); border-radius:999px;
+    padding:9px 14px; cursor:pointer; }
+  .filmhead.ended .replay{ display:block; }
+  header.hero.under{ background-image:none; background:#000006; }
+  header.hero.under .hart{ display:none; }
+  header.hero.under .wrap{ padding-top:48px; }
+/*/FILM*/
 </style></head>
 <body>
 
@@ -187,7 +199,9 @@
 <div class="announce">In development — not yet available for sale.
   <a href="mailto:hello@jmblighting.co.uk?subject=JMB%20Lighting%20%E2%80%94%20register%20interest">Register your interest &rarr;</a></div>
 
-<header class="hero" id="top"><div class="wrap">
+<div class="filmhead" id="film"><video id="filmv" src="jmb-film.mp4?v=3" poster="jmb-film-poster.jpg?v=3" autoplay muted playsinline preload="auto"></video><button class="replay" type="button" onclick="var v=document.getElementById('filmv');this.parentNode.classList.remove('ended');v.currentTime=0;v.play()">&#8635; Replay</button></div>
+<script>document.getElementById("filmv").addEventListener("ended",function(){this.parentNode.classList.add("ended")});</script>
+<header class="hero under" id="top"><div class="wrap">
   <div class="hcopy">
     <h1>LED lighting control that holds up <span class="g">on camera</span>.</h1>
     <p class="lead">JMB Lighting builds compact DMX, CRMX and Bluetooth LED
