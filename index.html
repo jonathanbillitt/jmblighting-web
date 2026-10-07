@@ -179,7 +179,42 @@
   header.hero.under .hart{ display:none; }
   header.hero.under .wrap{ padding-top:48px; }
 /*/FILM*/
-</style></head>
+/*VIEWER*/
+  /* Product cards open a 3D view of the unit on a darker stage, its spec sheet
+     underneath (Jonathan, 2026-10-07). */
+  .prod[data-model]{ cursor:pointer; }
+  .prod[data-model]:focus-visible{ outline:2px solid var(--cy); outline-offset:3px; }
+  .prod .p3d{ display:inline-block; margin-top:14px; font-size:14px; font-weight:600; color:var(--cy); }
+  .viewer{ position:fixed; inset:0; z-index:30; overflow-y:auto; overscroll-behavior:contain;
+    background:#030307; -webkit-overflow-scrolling:touch; }
+  .viewer[hidden]{ display:none; }
+  .vbar{ position:sticky; top:0; z-index:2; display:flex; align-items:center; justify-content:space-between;
+    gap:16px; padding:12px 18px; background:rgba(3,3,7,.86); backdrop-filter:blur(8px);
+    border-bottom:1px solid #15152a; }
+  .vbar .vmark{ color:#fff; display:flex; align-items:center; }
+  .vbar .vmark svg{ height:34px !important; }
+  .vclose{ width:42px; height:42px; border-radius:50%; border:1px solid #2a2a48; background:#0d0d1c;
+    color:var(--text); font-size:24px; line-height:1; cursor:pointer; }
+  .vclose:hover{ border-color:var(--pur); }
+  .vstage{ position:relative; height:min(64vh,600px); min-height:300px;
+    background:radial-gradient(ellipse 70% 60% at 50% 46%, #12122a 0%, #07070f 55%, #030307 100%); }
+  .vstage.wide{ height:min(48vh,440px,92vw); }   /* the 19-inch racks: wide and low, so a shorter stage */
+  .vstage canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  .vload{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:12px; color:var(--dim); font-size:14px; pointer-events:none; text-align:center; padding:0 20px; }
+  .vload .bar{ width:min(240px,60%); height:4px; border-radius:2px; background:#1b1b33; overflow:hidden; }
+  .vload .bar i{ display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cy),var(--pur2)); transition:width .2s; }
+  .vhint{ position:absolute; left:0; right:0; bottom:12px; text-align:center; font-size:12.5px; color:#6b6b8a;
+    pointer-events:none; }
+  .vspecs{ padding-top:30px; padding-bottom:60px; }
+  .vspecs h2{ font-size:clamp(22px,3vw,30px); margin:0 0 8px; }
+  .vspecs .sub{ margin:0 0 22px; }
+  .vspecs .vnote{ margin:18px 0 0; font-size:13px; color:#6b6b8a; text-align:left; }
+/*/VIEWER*/
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"}}</script>
+</head>
 <body>
 
 <nav><div class="wrap">
@@ -221,7 +256,7 @@
 <section id="products"><div class="wrap">
   <h2>The range</h2>
   <p class="sub">One control app, three sizes — a single output, a four-port workhorse, or a full eight-port rack.</p>
-  <div class="prods"><div class="prod"><div class="pmark"><svg viewBox="0 0 332 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><rect x="0" y="0" width="332" height="24" fill="currentColor"/><rect x="0" y="140" width="332" height="24" fill="currentColor"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><polygon points="0.00,32.00 48.00,32.00 48.00,48.00 28.84,80.00 48.00,80.00 48.00,96.00 0.00,96.00 0.00,80.00 19.16,48.00 0.00,48.00" fill="currentColor" stroke="none"/></g><g transform="translate(50,0)" stroke="currentColor"><circle cx="52" cy="48" r="44"/></g><g transform="translate(156,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 40 A32 32 0 0 1 72 40"/><path d="M72 40 V96"/></g><g transform="translate(238,0)" stroke="currentColor"><path d="M12.84 70.37 L79.16 25.63"/><path d="M79.16 25.63 A40 40 0 1 0 84.04 60.36"/><circle cx="12.84" cy="70.37" r="8" fill="currentColor" stroke="none"/><circle cx="79.16" cy="25.63" r="8" fill="currentColor" stroke="none"/><polygon points="91.65,62.83 76.43,57.89 76.43,62.83" fill="currentColor" stroke="none"/></g></g></svg></div><div class="pmeta"><span class="pports">1 port</span><p>Single-output controller for a hero fixture, a practical or a strip — the whole engine in the smallest box.</p></div></div><div class="prod"><div class="pmark"><svg viewBox="0 0 318 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><rect x="0" y="0" width="318" height="24" fill="currentColor"/><rect x="0" y="140" width="318" height="24" fill="currentColor"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><rect x="12" y="0" width="16" height="96" fill="currentColor" stroke="none"/><polygon points="20,0 29.67,0 56.60,39.50 37.26,39.50 13.40,4.50" fill="currentColor" stroke="none"/><path d="M0 64 H72"/></g><g transform="translate(74,0)" stroke="currentColor"><circle cx="48" cy="48" r="40"/></g><g transform="translate(172,0)" stroke="currentColor"><path d="M8 0 V56"/><path d="M8 56 A32 32 0 0 0 72 56"/><path d="M72 0 V96"/></g><g transform="translate(254,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 48 A40 40 0 0 1 59.69 9.75"/></g></g></svg></div><div class="pmeta"><span class="pports">4 ports</span><p>Four independent outputs — the everyday rig controller for a set, a stage or a studio floor.</p></div></div><div class="prod"><div class="pmark"><svg viewBox="0 0 318 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><mask id="desc-am-eight" maskUnits="userSpaceOnUse" x="0" y="140" width="318" height="24"><rect x="0" y="140" width="318" height="24" fill="white"/><g transform="translate(107,34) scale(1)" fill="none" stroke="black" stroke-width="32" stroke-linecap="square" stroke-linejoin="miter"><path d="M64 60 V82 L22 116"/></g></mask><rect x="0" y="0" width="318" height="24" fill="currentColor"/><rect x="0" y="140" width="318" height="24" fill="currentColor" mask="url(#desc-am-eight)"/><g transform="translate(19,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><circle cx="32" cy="24" r="16"/><path d="M52.78 52.00 A24 24 0 1 1 32 40"/></g><g transform="translate(60,0)" stroke="currentColor"><path d="M16 24 V96"/><rect x="6" y="1" width="20" height="20" fill="currentColor" stroke="none"/></g><g transform="translate(88,0)" stroke="currentColor"><circle cx="36" cy="60" r="28"/><path d="M64 60 V82 L22 116"/></g><g transform="translate(164,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 60 A28 28 0 0 1 64 60 V96"/></g><g transform="translate(224,0)" stroke="currentColor"><path d="M28 4 V78 A18 18 0 0 0 52 94"/><path d="M8 24 H48"/></g></g></svg></div><div class="pmeta"><span class="pports">8 ports</span><p>Eight outputs from one box — for larger builds, standing sets and touring racks.</p></div></div></div>
+  <div class="prods"><div class="prod" data-model="zone" role="button" tabindex="0" aria-label="Zone: view in 3D with specifications"><div class="pmark"><svg viewBox="0 0 332 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><rect x="0" y="0" width="332" height="24" fill="currentColor"/><rect x="0" y="140" width="332" height="24" fill="currentColor"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><polygon points="0.00,32.00 48.00,32.00 48.00,48.00 28.84,80.00 48.00,80.00 48.00,96.00 0.00,96.00 0.00,80.00 19.16,48.00 0.00,48.00" fill="currentColor" stroke="none"/></g><g transform="translate(50,0)" stroke="currentColor"><circle cx="52" cy="48" r="44"/></g><g transform="translate(156,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 40 A32 32 0 0 1 72 40"/><path d="M72 40 V96"/></g><g transform="translate(238,0)" stroke="currentColor"><path d="M12.84 70.37 L79.16 25.63"/><path d="M79.16 25.63 A40 40 0 1 0 84.04 60.36"/><circle cx="12.84" cy="70.37" r="8" fill="currentColor" stroke="none"/><circle cx="79.16" cy="25.63" r="8" fill="currentColor" stroke="none"/><polygon points="91.65,62.83 76.43,57.89 76.43,62.83" fill="currentColor" stroke="none"/></g></g></svg></div><div class="pmeta"><span class="pports">1 port</span><p>Single-output controller for a hero fixture, a practical or a strip — the whole engine in the smallest box.</p><span class="p3d">View in 3D &amp; specs &rarr;</span></div></div><div class="prod" data-model="four" role="button" tabindex="0" aria-label="4our: view in 3D with specifications"><div class="pmark"><svg viewBox="0 0 318 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><rect x="0" y="0" width="318" height="24" fill="currentColor"/><rect x="0" y="140" width="318" height="24" fill="currentColor"/><g transform="translate(0,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><rect x="12" y="0" width="16" height="96" fill="currentColor" stroke="none"/><polygon points="20,0 29.67,0 56.60,39.50 37.26,39.50 13.40,4.50" fill="currentColor" stroke="none"/><path d="M0 64 H72"/></g><g transform="translate(74,0)" stroke="currentColor"><circle cx="48" cy="48" r="40"/></g><g transform="translate(172,0)" stroke="currentColor"><path d="M8 0 V56"/><path d="M8 56 A32 32 0 0 0 72 56"/><path d="M72 0 V96"/></g><g transform="translate(254,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 48 A40 40 0 0 1 59.69 9.75"/></g></g></svg></div><div class="pmeta"><span class="pports">4 ports</span><p>Four independent outputs — the everyday rig controller for a set, a stage or a studio floor.</p><span class="p3d">View in 3D &amp; specs &rarr;</span></div></div><div class="prod" data-model="eight" role="button" tabindex="0" aria-label="8ight: view in 3D with specifications"><div class="pmark"><svg viewBox="0 0 318 164" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="height:54px;width:auto;display:block;vertical-align:middle"><mask id="desc-am-eight" maskUnits="userSpaceOnUse" x="0" y="140" width="318" height="24"><rect x="0" y="140" width="318" height="24" fill="white"/><g transform="translate(107,34) scale(1)" fill="none" stroke="black" stroke-width="32" stroke-linecap="square" stroke-linejoin="miter"><path d="M64 60 V82 L22 116"/></g></mask><rect x="0" y="0" width="318" height="24" fill="currentColor"/><rect x="0" y="140" width="318" height="24" fill="currentColor" mask="url(#desc-am-eight)"/><g transform="translate(19,34) scale(1)" fill="none" stroke-width="16" stroke-linecap="butt" stroke-linejoin="miter"><g transform="translate(0,0)" stroke="currentColor"><circle cx="32" cy="24" r="16"/><path d="M52.78 52.00 A24 24 0 1 1 32 40"/></g><g transform="translate(60,0)" stroke="currentColor"><path d="M16 24 V96"/><rect x="6" y="1" width="20" height="20" fill="currentColor" stroke="none"/></g><g transform="translate(88,0)" stroke="currentColor"><circle cx="36" cy="60" r="28"/><path d="M64 60 V82 L22 116"/></g><g transform="translate(164,0)" stroke="currentColor"><path d="M8 0 V96"/><path d="M8 60 A28 28 0 0 1 64 60 V96"/></g><g transform="translate(224,0)" stroke="currentColor"><path d="M28 4 V78 A18 18 0 0 0 52 94"/><path d="M8 24 H48"/></g></g></svg></div><div class="pmeta"><span class="pports">8 ports</span><p>Eight outputs from one box — for larger builds, standing sets and touring racks.</p><span class="p3d">View in 3D &amp; specs &rarr;</span></div></div></div>
 </div></section>
 
 <section id="features" style="background:var(--bg2)"><div class="wrap">
@@ -233,7 +268,7 @@
 <section id="specs"><div class="wrap">
   <h2>Specifications</h2>
   <p class="sub">Indicative — the platform is in development, so some figures may firm up before release.</p>
-  <table class="spectable"><tbody><tr><th>Outputs</th><td>1 / 4 / 8 independent, depending on model</td></tr><tr><th>Output type</th><td>RGB or tuneable white (RGBW / CW-WW) per port</td></tr><tr><th>Current</th><td>Up to ~6.5&nbsp;A per output — configurable per-port limit</td></tr><tr><th>Dimming</th><td>16-bit, temporally dithered</td></tr><tr><th>PWM frequency</th><td>8 / 20 / 62.5&nbsp;kHz (camera) — selectable per port</td></tr><tr><th>Wired &amp; wireless in</th><td>DMX512 (5-pin) · CRMX (LumenRadio) · full RDM (E1.20 / E1.37-1)</td></tr><tr><th>App control</th><td>Bluetooth&nbsp;LE via the web app — no account, no cloud</td></tr><tr><th>Effects</th><td>21 built-in dynamic looks, with rig-wide tempo &amp; spread</td></tr><tr><th>Protection</th><td>Per-port over-current (µs trip), short, thermal foldback, ground-fault, comms failsafe</td></tr><tr><th>Telemetry</th><td>Per-port current (±1%), temperature, faults, source</td></tr><tr><th>Front panel</th><td>Rotary encoder + OLED on 4our &amp; 8ight; Zone is app-only</td></tr><tr><th>Firmware updates</th><td>Wireless over Bluetooth, with automatic rollback</td></tr><tr><th>Power</th><td>Built-in PSU on 4our &amp; 8ight; Zone runs from a 12&nbsp;V or 24&nbsp;V PSU or a battery pack</td></tr><tr><th>Made in</th><td>United Kingdom</td></tr></tbody></table>
+  <table class="spectable"><tbody><tr><th>Outputs</th><td>1 / 4 / 8 independent, depending on model</td></tr><tr><th>Output type</th><td>RGB, RGBW, RGBWA or tuneable white per port (6-pin XLR)</td></tr><tr><th>Current</th><td>Up to 6.75&nbsp;A per output — configurable per-port limit</td></tr><tr><th>Dimming</th><td>16-bit, temporally dithered</td></tr><tr><th>PWM frequency</th><td>8 / 15.6 (camera) / 20&nbsp;kHz, or custom 2–25&nbsp;kHz — selectable per port</td></tr><tr><th>Wired &amp; wireless in</th><td>DMX512 (5-pin) · CRMX (LumenRadio) · full RDM (E1.20 / E1.37-1)</td></tr><tr><th>App control</th><td>Bluetooth&nbsp;LE via the web app — no account, no cloud</td></tr><tr><th>Effects</th><td>21 built-in dynamic looks, with rig-wide tempo &amp; spread</td></tr><tr><th>Protection</th><td>Per-port over-current (µs trip), short, thermal foldback, ground-fault, comms failsafe</td></tr><tr><th>Telemetry</th><td>Per-port current (±1%), temperature, faults, source</td></tr><tr><th>Front panel</th><td>OLED and rotary encoder on every model, plus a screen per output on 4our &amp; 8ight</td></tr><tr><th>Firmware updates</th><td>Wireless over Bluetooth, with automatic rollback</td></tr><tr><th>Power</th><td>Built-in 24&nbsp;V supply on every model, mains in on powerCON TRUE1</td></tr><tr><th>Made in</th><td>United Kingdom</td></tr></tbody></table>
 </div></section>
 
 <section class="appband" id="app"><div class="wrap"><div class="row">
@@ -360,5 +395,148 @@
     AB. The Bluetooth® word mark and logos are registered trademarks owned by Bluetooth
     SIG, Inc. All other trademarks are the property of their respective owners.</div>
 </div></footer>
+
+<!-- 3D viewer: opened from the product cards (and by #zone, #4our, #8ight). -->
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-labelledby="vTitle">
+  <div class="vbar"><div class="vmark" id="vMark"></div>
+    <button class="vclose" id="vClose" type="button" aria-label="Close">&times;</button></div>
+  <div class="vstage" id="vStage"><canvas id="vCanvas"></canvas>
+    <div class="vload" id="vLoad"><span id="vLoadTxt">Loading the 3D model…</span><span class="bar"><i id="vBar"></i></span></div>
+    <div class="vhint">Drag to turn · pinch or scroll to zoom</div></div>
+  <div class="wrap vspecs"><h2 id="vTitle"></h2><p class="sub" id="vSub"></p>
+    <table class="spectable"><tbody id="vRows"></tbody></table>
+    <p class="vnote">Pre-production specification: every figure is confirmed on the bench before sale and may change. The model shown is the current design.</p></div>
+</div>
+<script type="module">
+// Per-unit spec sheets. Source: docs/USER_MANUAL.md, docs/DMX_CHART.md, docs/CASE_RACK_1.md and the
+// hardware decisions of 2026-10-07; anything still being decided (sizes, the 8ight's supply rating) is left out.
+const SHARED = {
+  ch: "Up to five per output: RGB, RGBW, RGBWA or tuneable white",
+  power: "Built-in 24&nbsp;V supply · 100–240&nbsp;V mains in on powerCON TRUE1",
+  in: "DMX512 in and thru (5-pin XLR) · CRMX wireless (LumenRadio), external aerial · full RDM",
+  app: "Bluetooth LE, run from your phone: no account, no cloud",
+  dim: "~16-bit, temporally dithered · PWM 8 / 15.6 / 20&nbsp;kHz or custom 2–25&nbsp;kHz, per output",
+  fx: "21 built in, with rig-wide tempo and spread",
+  prot: "Per-output over-current trip in microseconds, thermal fold, lockable current limit, ground-leak and wiring checks",
+  upd: "Over Bluetooth, with automatic rollback" };
+const UNITS = {
+  zone: { name: "Zone", hash: "zone", sub: "Single-output controller for a hero fixture, a practical or a strip.", rows: [
+    ["Outputs", "1 × 6-pin XLR (Neutrik)"], ["Channels", SHARED.ch], ["Current", "6.75&nbsp;A"],
+    ["Power", SHARED.power], ["Control in", SHARED.in], ["App", SHARED.app],
+    ["Front panel", "2.42″ OLED and rotary encoder · status lights for power, DMX, RDM, CRMX and link"],
+    ["Dimming", SHARED.dim], ["Effects", SHARED.fx], ["Protection", SHARED.prot],
+    ["Cooling", "Fanless"], ["Enclosure", "Compact aluminium case"], ["Firmware updates", SHARED.upd], ["Made in", "United Kingdom"]] },
+  four: { name: "4our", hash: "4our", sub: "Four independent outputs: the everyday rig controller for a set, a stage or a studio floor.", rows: [
+    ["Outputs", "4 × 6-pin XLR (Neutrik)"], ["Channels", SHARED.ch], ["Current", "6.75&nbsp;A per output · 27&nbsp;A total"],
+    ["Power", SHARED.power], ["Control in", SHARED.in], ["App", SHARED.app],
+    ["Front panel", "2.42″ OLED and rotary encoder · a 1.3″ screen for every output · status lights for power, DMX, RDM, CRMX and link"],
+    ["Dimming", SHARED.dim], ["Effects", SHARED.fx], ["Protection", SHARED.prot],
+    ["Cooling", "80&nbsp;mm fan, rear exhaust"], ["Enclosure", "2U 19-inch rack, black glass front"], ["Firmware updates", SHARED.upd], ["Made in", "United Kingdom"]] },
+  eight: { name: "8ight", hash: "8ight", sub: "Eight outputs from one box: for larger builds, standing sets and touring racks.", rows: [
+    ["Outputs", "8 × 6-pin XLR (Neutrik)"], ["Channels", SHARED.ch], ["Current", "6.75&nbsp;A per output · 54&nbsp;A total"],
+    ["Power", SHARED.power], ["Control in", SHARED.in], ["App", SHARED.app],
+    ["Front panel", "2.42″ OLED and rotary encoder · a 1.3″ screen for every output · status lights for power, DMX, RDM, CRMX and link"],
+    ["Dimming", SHARED.dim], ["Effects", SHARED.fx], ["Protection", SHARED.prot],
+    ["Cooling", "Fan, rear exhaust"], ["Enclosure", "2U 19-inch rack, black glass front"], ["Firmware updates", SHARED.upd], ["Made in", "United Kingdom"]] } };
+const BY_HASH = Object.fromEntries(Object.entries(UNITS).map(([k, u]) => [u.hash, k]));
+const $ = id => document.getElementById(id);
+const viewer = $("viewer");
+let three = null, cur = null, model = null, openKey = null, raf = false;
+
+async function boot() {               // three.js only loads the first time a card is opened
+  if (three) return three;
+  const [THREE, {GLTFLoader}, {OrbitControls}, {RoomEnvironment}, {MeshoptDecoder}] = await Promise.all([
+    import("three"), import("three/addons/loaders/GLTFLoader.js"), import("three/addons/controls/OrbitControls.js"),
+    import("three/addons/environments/RoomEnvironment.js"), import("three/addons/libs/meshopt_decoder.module.js")]);
+  const canvas = $("vCanvas");
+  const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.55;
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.01, 50);
+  const key = new THREE.DirectionalLight(0xffffff, 2.2); key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0005; scene.add(key, key.target);
+  const rim = new THREE.DirectionalLight(0x9fb4ff, 1.1); scene.add(rim);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMaterial({opacity: 0.45}));
+  floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableDamping = true; controls.enablePan = false; controls.maxPolarAngle = Math.PI * 0.49;
+  controls.autoRotate = !matchMedia("(prefers-reduced-motion: reduce)").matches; controls.autoRotateSpeed = 0.9;
+  controls.addEventListener("start", () => { controls.autoRotate = false; });
+  const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
+  const size = () => { const r = $("vStage").getBoundingClientRect(); renderer.setSize(r.width, r.height, false);
+    camera.aspect = r.width / Math.max(1, r.height); camera.updateProjectionMatrix();
+    if (three && three.fitR) refit(); };
+  new ResizeObserver(size).observe($("vStage")); size();
+  three = {THREE, renderer, scene, camera, controls, loader, key, rim, floor};
+  return three;
+}
+// Distance at which the unit's bounding sphere fits both the height and the width of the stage, so it never
+// leaves the frame as it turns (a 19-inch rack on a portrait phone is limited by the width).
+function fitDistance(r) {
+  const {THREE, camera} = three, v = THREE.MathUtils.degToRad(camera.fov) / 2, h = Math.atan(Math.tan(v) * camera.aspect);
+  return r / Math.sin(Math.min(v, h)) * 0.98;
+}
+function refit() {                    // the stage changed shape: keep the view direction, move to the new fit distance
+  const {camera, controls} = three, d = fitDistance(three.fitR), off = camera.position.clone().sub(controls.target);
+  camera.position.copy(controls.target).add(off.setLength(d)); controls.maxDistance = d * 2.2; controls.update();
+}
+function frame(m) {                   // centre the unit on the floor and frame it from the front, a little above and to the side
+  const {THREE, camera, controls, key, rim, floor} = three;
+  const box = new THREE.Box3().setFromObject(m), c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+  m.position.sub(new THREE.Vector3(c.x, box.min.y, c.z));
+  const r = s.length() / 2, d = fitDistance(r); three.fitR = r;
+  const look = new THREE.Vector3(0, s.y * 0.45, 0);
+  camera.position.copy(look).add(new THREE.Vector3(0.55, 0.36, 0.78).setLength(d)); camera.near = d / 100; camera.far = d * 10; camera.updateProjectionMatrix();
+  controls.target.copy(look); controls.minDistance = r * 1.2; controls.maxDistance = d * 2.2; controls.update();
+  key.position.set(-r * 2.2, r * 3.2, r * 2.4); key.target.position.copy(look);
+  const sc = key.shadow.camera; sc.left = sc.bottom = -r * 1.6; sc.right = sc.top = r * 1.6; sc.near = r * 0.5; sc.far = r * 8; sc.updateProjectionMatrix();
+  rim.position.set(r * 2.5, r * 1.5, -r * 3);
+  floor.scale.setScalar(r * 8); floor.position.y = 0;
+}
+function loop() {
+  if (!openKey || !three) { raf = false; return; }
+  three.controls.update(); three.renderer.render(three.scene, three.camera); requestAnimationFrame(loop);
+}
+async function show(k) {
+  const u = UNITS[k]; if (!u) return;
+  openKey = k;
+  $("vMark").innerHTML = document.querySelector(`.prod[data-model="${k}"] .pmark`).innerHTML;
+  $("vTitle").textContent = u.name; $("vSub").textContent = u.sub;
+  $("vRows").innerHTML = u.rows.map(([a, b]) => `<tr><th>${a}</th><td>${b}</td></tr>`).join("");
+  $("vStage").classList.toggle("wide", k !== "zone");
+  viewer.hidden = false; viewer.scrollTop = 0; document.body.style.overflow = "hidden";
+  $("vLoad").style.display = ""; $("vLoadTxt").textContent = "Loading the 3D model…"; $("vBar").style.width = "0";
+  try { await boot(); }
+  catch (e) { $("vLoadTxt").textContent = "The 3D view needs WebGL, which this browser has turned off. The specs are below."; $("vBar").parentNode.style.display = "none"; return; }
+  $("vBar").parentNode.style.display = "";
+  if (cur === k && model) { $("vLoad").style.display = "none"; if (!raf) { raf = true; loop(); } return; }
+  if (model) { three.scene.remove(model); model.traverse(o => { if (o.geometry) o.geometry.dispose(); }); model = null; cur = null; }
+  three.loader.load(`models/${k}.glb?v=2`, g => {
+    if (openKey !== k) return;      // closed or switched while it loaded
+    model = g.scene; cur = k;
+    model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    three.scene.add(model); frame(model); three.controls.autoRotate = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("vLoad").style.display = "none";
+  }, e => { if (e.total) $("vBar").style.width = Math.round(100 * e.loaded / e.total) + "%"; },
+  () => { $("vLoadTxt").textContent = "The 3D model didn't load. Check the connection and try again; the specs are below."; });
+  if (!raf) { raf = true; loop(); }
+}
+function hide() { viewer.hidden = true; openKey = null; document.body.style.overflow = ""; }
+function open(k) { if (location.hash !== "#" + UNITS[k].hash) history.pushState({v: k}, "", "#" + UNITS[k].hash); show(k); }
+document.querySelectorAll(".prod[data-model]").forEach(el => {
+  el.addEventListener("click", () => open(el.dataset.model));
+  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(el.dataset.model); } });
+});
+const closeViewer = () => { if (history.state && history.state.v) history.back(); else { history.replaceState(null, "", "#products"); hide(); } };
+$("vClose").addEventListener("click", closeViewer);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !viewer.hidden) closeViewer(); });
+const fromHash = () => { const k = BY_HASH[location.hash.slice(1)]; if (k) show(k); else if (!viewer.hidden) hide(); };
+addEventListener("popstate", fromHash);
+if (BY_HASH[location.hash.slice(1)]) fromHash();
+</script>
 
 </body></html>
