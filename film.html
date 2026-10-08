@@ -234,7 +234,7 @@
 <div class="announce">In development — not yet available for sale.
   <a href="mailto:hello@jmblighting.co.uk?subject=JMB%20Lighting%20%E2%80%94%20register%20interest">Register your interest &rarr;</a></div>
 
-<div class="filmhead" id="film"><video id="filmv" src="jmb-film.mp4?v=11" poster="jmb-film-poster.jpg?v=11" autoplay muted playsinline preload="auto"></video><button class="replay" type="button" onclick="var v=document.getElementById('filmv');this.parentNode.classList.remove('ended');v.currentTime=0;v.play()">&#8635; Replay</button></div>
+<div class="filmhead" id="film"><video id="filmv" src="jmb-film.mp4?v=12" poster="jmb-film-poster.jpg?v=12" autoplay muted playsinline preload="auto"></video><button class="replay" type="button" onclick="var v=document.getElementById('filmv');this.parentNode.classList.remove('ended');v.currentTime=0;v.play()">&#8635; Replay</button></div>
 <script>document.getElementById("filmv").addEventListener("ended",function(){this.parentNode.classList.add("ended")});</script>
 <header class="hero under" id="top"><div class="wrap">
   <div class="hcopy">
@@ -515,7 +515,7 @@ async function show(k) {
   $("vBar").parentNode.style.display = "";
   if (cur === k && model) { $("vLoad").style.display = "none"; if (!raf) { raf = true; loop(); } return; }
   if (model) { three.scene.remove(model); model.traverse(o => { if (o.geometry) o.geometry.dispose(); }); model = null; cur = null; }
-  three.loader.load(`models/${k}.glb?v=3`, g => {
+  three.loader.load(`models/${k}.glb?v=5`, g => {
     if (openKey !== k) return;      // closed or switched while it loaded
     model = g.scene; cur = k;
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
