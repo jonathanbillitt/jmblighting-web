@@ -519,7 +519,7 @@ async function show(k) {
   $("vBar").parentNode.style.display = "";
   if (cur === k && model) { $("vLoad").style.display = "none"; if (!raf) { raf = true; loop(); } return; }
   if (model) { three.scene.remove(model); model.traverse(o => { if (o.geometry) o.geometry.dispose(); }); model = null; cur = null; }
-  three.loader.load(`models/${k}.glb?v=10`, g => {
+  three.loader.load(`models/${k}.glb?v=11`, g => {
     if (openKey !== k) return;      // closed or switched while it loaded
     model = g.scene; cur = k;
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
