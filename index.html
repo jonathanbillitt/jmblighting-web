@@ -501,6 +501,28 @@ function frame(m) {                   // centre the unit on the floor and frame 
   rim.position.set(r * 2.5, r * 1.5, -r * 3);
   floor.scale.setScalar(r * 8); floor.position.y = 0;
 }
+// The status LEDs flare (user 2026-11-20: "can the leds flare a little more?"): a soft additive halo and a hot core at each
+// light pipe's lit end. The positions and colours ride in the model (tools/pages/site_models.py led_marks -> scene extras).
+let glowTex = null;
+function flare(m) {
+  const {THREE} = three, leds = (m.userData && m.userData.leds) || [];
+  if (!leds.length) return;
+  if (!glowTex) {
+    const c = document.createElement("canvas"); c.width = c.height = 128; const g = c.getContext("2d"), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.14, "rgba(255,255,255,.8)"); gr.addColorStop(0.32, "rgba(255,255,255,.26)");
+    gr.addColorStop(0.6, "rgba(255,255,255,.06)"); gr.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 128); glowTex = new THREE.CanvasTexture(c); glowTex.colorSpace = THREE.SRGBColorSpace;
+  }
+  const white = new THREE.Color(1, 1, 1);
+  for (const [x, y, z, r, g, b] of leds) {
+    const col = new THREE.Color(r, g, b);
+    for (const [size, tint, op] of [[34, col, 0.22], [13, col, 0.9], [4, col.clone().lerp(white, 0.55), 1]]) {   // a wide soft bloom, the halo (mm across), then the hot core
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({map: glowTex, color: tint, opacity: op, transparent: true, depthWrite: false,
+        blending: THREE.AdditiveBlending, toneMapped: false}));
+      sp.position.set(x, y, z); sp.scale.setScalar(size); sp.renderOrder = 2; m.add(sp);
+    }
+  }
+}
 function loop() {
   if (!openKey || !three) { raf = false; return; }
   three.controls.update(); three.renderer.render(three.scene, three.camera); requestAnimationFrame(loop);
@@ -519,11 +541,11 @@ async function show(k) {
   $("vBar").parentNode.style.display = "";
   if (cur === k && model) { $("vLoad").style.display = "none"; if (!raf) { raf = true; loop(); } return; }
   if (model) { three.scene.remove(model); model.traverse(o => { if (o.geometry) o.geometry.dispose(); }); model = null; cur = null; }
-  three.loader.load(`models/${k}.glb?v=13`, g => {
+  three.loader.load(`models/${k}.glb?v=14`, g => {
     if (openKey !== k) return;      // closed or switched while it loaded
     model = g.scene; cur = k;
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-    three.scene.add(model); frame(model); three.controls.autoRotate = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    three.scene.add(model); frame(model); flare(model); three.controls.autoRotate = !matchMedia("(prefers-reduced-motion: reduce)").matches;
     $("vLoad").style.display = "none";
   }, e => { if (e.total) $("vBar").style.width = Math.round(100 * e.loaded / e.total) + "%"; },
   () => { $("vLoadTxt").textContent = "The 3D model didn't load. Check the connection and try again; the specs are below."; });
