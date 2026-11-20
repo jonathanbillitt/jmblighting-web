@@ -501,31 +501,43 @@ function frame(m) {                   // centre the unit on the floor and frame 
   rim.position.set(r * 2.5, r * 1.5, -r * 3);
   floor.scale.setScalar(r * 8); floor.position.y = 0;
 }
-// The status LEDs flare (user 2026-11-20: "can the leds flare a little more?"): a soft additive halo and a hot core at each
-// light pipe's lit end. The positions and colours ride in the model (tools/pages/site_models.py led_marks -> scene extras).
-let glowTex = null;
+// The status LEDs flare (user 2026-11-20: "can the leds flare a little more?"): a soft additive halo and a small hot core at
+// each light pipe's lit end. The positions, colours and facing ride in the model (tools/pages/site_models.py led_marks -> scene
+// extras). The glows ignore depth (a flat glow card cut through the label and showed as stripes that crawled as the unit
+// turned: "too messy"), so each one fades with how squarely its LED faces the camera and is gone before it turns away.
+let glowTex = null, glows = [];
 function flare(m) {
   const {THREE} = three, leds = (m.userData && m.userData.leds) || [];
+  glows = [];
   if (!leds.length) return;
   if (!glowTex) {
     const c = document.createElement("canvas"); c.width = c.height = 128; const g = c.getContext("2d"), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
-    gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.14, "rgba(255,255,255,.8)"); gr.addColorStop(0.32, "rgba(255,255,255,.26)");
-    gr.addColorStop(0.6, "rgba(255,255,255,.06)"); gr.addColorStop(1, "rgba(255,255,255,0)");
+    gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.18, "rgba(255,255,255,.55)"); gr.addColorStop(0.45, "rgba(255,255,255,.12)");
+    gr.addColorStop(1, "rgba(255,255,255,0)");
     g.fillStyle = gr; g.fillRect(0, 0, 128, 128); glowTex = new THREE.CanvasTexture(c); glowTex.colorSpace = THREE.SRGBColorSpace;
   }
   const white = new THREE.Color(1, 1, 1);
-  for (const [x, y, z, r, g, b] of leds) {
-    const col = new THREE.Color(r, g, b);
-    for (const [size, tint, op] of [[34, col, 0.22], [13, col, 0.9], [4, col.clone().lerp(white, 0.55), 1]]) {   // a wide soft bloom, the halo (mm across), then the hot core
-      const sp = new THREE.Sprite(new THREE.SpriteMaterial({map: glowTex, color: tint, opacity: op, transparent: true, depthWrite: false,
-        blending: THREE.AdditiveBlending, toneMapped: false}));
-      sp.position.set(x, y, z); sp.scale.setScalar(size); sp.renderOrder = 2; m.add(sp);
+  for (const [x, y, z, r, g, b, nx = 0, ny = 1, nz = 0] of leds) {
+    const col = new THREE.Color(r, g, b), n = new THREE.Vector3(nx, ny, nz), p = new THREE.Vector3(x, y, z);
+    for (const [size, tint, op] of [[8, col, 0.75], [2.6, col.clone().lerp(white, 0.5), 0.9]]) {   // the halo (mm across), then the hot core
+      const mat = new THREE.SpriteMaterial({map: glowTex, color: tint, opacity: 0, transparent: true, depthWrite: false, depthTest: false,
+        blending: THREE.AdditiveBlending, toneMapped: false});
+      const sp = new THREE.Sprite(mat); sp.position.copy(p); sp.scale.setScalar(size); sp.renderOrder = 2; m.add(sp);
+      glows.push({mat, op, p, n});
     }
+  }
+}
+function glowFacing() {                // each frame: the glow follows how squarely its LED looks at the camera
+  if (!glows.length || !model) return;
+  const cam = model.worldToLocal(three.camera.position.clone()), v = new three.THREE.Vector3();
+  for (const gl of glows) {
+    const f = v.copy(cam).sub(gl.p).normalize().dot(gl.n), u = Math.min(1, Math.max(0, (f - 0.08) / 0.3));
+    gl.mat.opacity = gl.op * u * u * (3 - 2 * u);
   }
 }
 function loop() {
   if (!openKey || !three) { raf = false; return; }
-  three.controls.update(); three.renderer.render(three.scene, three.camera); requestAnimationFrame(loop);
+  three.controls.update(); glowFacing(); three.renderer.render(three.scene, three.camera); requestAnimationFrame(loop);
 }
 async function show(k) {
   const u = UNITS[k]; if (!u) return;
@@ -541,7 +553,7 @@ async function show(k) {
   $("vBar").parentNode.style.display = "";
   if (cur === k && model) { $("vLoad").style.display = "none"; if (!raf) { raf = true; loop(); } return; }
   if (model) { three.scene.remove(model); model.traverse(o => { if (o.geometry) o.geometry.dispose(); }); model = null; cur = null; }
-  three.loader.load(`models/${k}.glb?v=14`, g => {
+  three.loader.load(`models/${k}.glb?v=15`, g => {
     if (openKey !== k) return;      // closed or switched while it loaded
     model = g.scene; cur = k;
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
