@@ -455,15 +455,17 @@ async function boot() {               // three.js only loads the first time a ca
   const canvas = $("vCanvas");
   const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;   // 2026-11-21: was 1.05 ("the models are a bit dark"; then 1.3 was "a little" too light)
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.55;
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.62;
   const camera = new THREE.PerspectiveCamera(32, 1, 0.01, 50);
   const key = new THREE.DirectionalLight(0xffffff, 2.2); key.castShadow = true;
   key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0005; scene.add(key, key.target);
   const rim = new THREE.DirectionalLight(0x9fb4ff, 1.1); scene.add(rim);
+  // a magenta / UV key from the front right, low, opposite the white key (user 2026-11-21: "a little magenta/uv key light on each one")
+  const uv = new THREE.DirectionalLight(0xb04dff, 3.6); scene.add(uv, uv.target);   // "a little more key glow" over the darker base (was 2.4)
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMaterial({opacity: 0.45}));
   floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
   const controls = new OrbitControls(camera, canvas);
@@ -475,7 +477,7 @@ async function boot() {               // three.js only loads the first time a ca
     camera.aspect = r.width / Math.max(1, r.height); camera.updateProjectionMatrix();
     if (three && three.fitR) refit(); };
   new ResizeObserver(size).observe($("vStage")); size();
-  three = {THREE, renderer, scene, camera, controls, loader, key, rim, floor};
+  three = {THREE, renderer, scene, camera, controls, loader, key, rim, uv, floor};
   return three;
 }
 // Distance at which the unit's bounding sphere fits both the height and the width of the stage, so it never
@@ -489,7 +491,7 @@ function refit() {                    // the stage changed shape: keep the view 
   camera.position.copy(controls.target).add(off.setLength(d)); controls.maxDistance = d * 2.2; controls.update();
 }
 function frame(m) {                   // centre the unit on the floor and frame it from the front, a little above and to the side
-  const {THREE, camera, controls, key, rim, floor} = three;
+  const {THREE, camera, controls, key, rim, uv, floor} = three;
   const box = new THREE.Box3().setFromObject(m), c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
   m.position.sub(new THREE.Vector3(c.x, box.min.y, c.z));
   const r = s.length() / 2, d = fitDistance(r); three.fitR = r;
@@ -499,6 +501,7 @@ function frame(m) {                   // centre the unit on the floor and frame 
   key.position.set(-r * 2.2, r * 3.2, r * 2.4); key.target.position.copy(look);
   const sc = key.shadow.camera; sc.left = sc.bottom = -r * 1.6; sc.right = sc.top = r * 1.6; sc.near = r * 0.5; sc.far = r * 8; sc.updateProjectionMatrix();
   rim.position.set(r * 2.5, r * 1.5, -r * 3);
+  uv.position.set(r * 2.8, r * 0.9, r * 2.0); uv.target.position.copy(look);
   floor.scale.setScalar(r * 8); floor.position.y = 0;
 }
 // The status LEDs flare (user 2026-11-20: "can the leds flare a little more?"): a soft additive halo and a small hot core at
