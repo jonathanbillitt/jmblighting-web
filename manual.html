@@ -117,16 +117,17 @@ Clear Fault) sheets. The panel's own rows:</p>
 <dt>What it does</dt>
 <dd><strong>Off</strong> hands the port back to DMX and stops any effect. The colours are kept, so the next <strong>On</strong> brings them back.</dd>
 <dt>Good to know</dt>
-<dd>The same thing as Presets → DMX In.</dd>
+<dd>The same thing as Presets → Colours → DMX In.</dd>
 </dl></div>
 <div class="set"><h4 id="effect-speed">Effect · Speed</h4>
 <p><em>Panel: Port Settings → Effect / Speed · App: port card</em></p>
 <dl>
 <dt>What it does</dt>
-<dd><strong>Effect</strong> opens the effect picker (<a href="#effects">Effects</a>); <strong>Speed</strong> is the 0–100 % scrub editor.</dd>
+<dd><strong>Effect</strong> opens the effect picker (<a href="#effects">Effects</a>); <strong>Speed</strong> sets how fast it runs, shown as × the designed
+tempo exactly as on the app's wheel.</dd>
 </dl></div>
-<p><strong>All Ports adds five rows:</strong> Universe (below), <a href="#apply">Apply</a>, <a href="#tap-tempo">Tempo</a>, <a href="#spread">Spread</a> and
-<a href="#clear-all">Clear All</a>.</p>
+<p><strong>All Ports adds six rows:</strong> Universe (below), <a href="#apply">Apply</a> and its Offset step, <a href="#tap-tempo">Tempo</a>,
+<a href="#spread">Spread</a> and <a href="#clear-all">Clear All</a>.</p>
 <div class="set"><h4 id="universe-send">Universe: Local / Send</h4>
 <p><em>Panel: Port Settings → All Ports → Universe</em></p>
 <dl>
@@ -282,8 +283,9 @@ wait until the update has finished.</p>
 <hr />
 <h2 id="effects">3. Effects</h2>
 <p>Twenty-four built-in dynamic looks per port: quick looks, so for more advanced effects run them from a lighting
-console. Set one from Port Settings → Effect, the app, or DMX channel 8 of the FX personality; Speed 0–255 (128 =
-designed tempo) from the app or DMX channel 9. While an effect runs, the app's <strong>RGB sliders are greyed out</strong> (except
+console. Set one from Port Settings → Effect, the app, or DMX channel 8 of the FX personality. <strong>Speed</strong> reads the same on
+the app's wheel and the panel, as × the designed tempo: <strong>Stop</strong>, then 0.13× through 1.0× to 8.0×, and on the beat
+effects musical bands, ¼× to 4× (Strobe in flashes per beat). From a desk it is DMX channel 9, 0–255, with 128 = 1×. While an effect runs, the app's <strong>RGB sliders are greyed out</strong> (except
 the three Dim effects): the effect owns the colour; clear the effect to get them back (the dimmer and speed wheels stay
 live). <strong>Speed 0 stops an effect</strong>: a continuous look freezes on its current frame, Strobe and Police go dark.</p>
 <p><strong>Effects never start on their own.</strong> When DMX is absent, an effect runs only from the moment you deliberately pick it
@@ -721,7 +723,7 @@ signal stops, which is <em>why</em> the faders would otherwise seem to do nothin
 <dl>
 <dt>What it does</dt>
 <dd><strong>Clear all</strong> returns every port to a clean base — full white, effects off, dimmer down — after a confirmation (on
-the panel: every port to dimmer 0, manual on, effect off, colour 100/100/100, speed 128). <strong>Undo</strong> puts the looks
+the panel: every port to dimmer 0, manual on, effect off, colour 100/100/100, speed 1×). <strong>Undo</strong> puts the looks
 back — each port's colour, level and effect — on the controller they were cleared from.</dd>
 <dt>Good to know</dt>
 <dd>Neither touches the patch.</dd>
@@ -781,8 +783,9 @@ channels), or leave it blank for the automatic step.</dd>
 <dd>Patching a whole unit in one go. The automatic Offset step is the widest mode the unit runs (14 channels on the
 five-output units), so any port can change mode later without a re-patch.</dd>
 <dt>Good to know</dt>
-<dd>Heads follow +1. On the panel, Offset is a fixed 14-channel spacing, the widest mode (RGBWA FX). The app, the
-panel's All Ports edit, a desk's RDM base address and the Universe baton all fan out by the same mode and step.</dd>
+<dd>Heads follow +1. On the panel, the <strong>Offset step</strong> row under Apply sets the same step: Auto, or 1–512 channels.
+The app, the panel's All Ports edit, a desk's RDM base address and the Universe baton all fan out by the same mode
+and step.</dd>
 <dt>See also</dt>
 <dd><a href="#universe">The Universe</a> · <a href="#address">Address · Head</a> · <a href="#mode">Mode</a></dd>
 </dl></div>
@@ -1193,8 +1196,8 @@ controller present. Nothing a demo user touches goes anywhere.</dd>
 </tr>
 </tbody>
 </table>
-<p>Latched ports show a flashing fault banner on their screen, the fault word appears in the menu and the app, and Clear
-Faults / Port Reset re-arms (<a href="#clear-fault">Clear fault &amp; re-enable</a>). The controller raises two faults of its own:</p>
+<p>Latched ports show a flashing fault banner on their screen, the fault word appears in the menu and the app, and
+<a href="#clear-fault">Clear fault &amp; re-enable</a> re-arms the port (in its Protection sheet; Clear Fault on the panel). The controller raises two faults of its own:</p>
 <div class="set"><h4 id="power-fault">Power fault (inrush board)</h4>
 <p><em>Panel: PWR FLT · App: a red banner on every tab</em></p>
 <dl>
