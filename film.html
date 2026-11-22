@@ -475,7 +475,7 @@ async function boot() {               // three.js only loads the first time a ca
   const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
   const size = () => { const r = $("vStage").getBoundingClientRect(); renderer.setSize(r.width, r.height, false);
     camera.aspect = r.width / Math.max(1, r.height); camera.updateProjectionMatrix();
-    if (three && three.fitR) refit(); };
+    if (three && three.fitR) refit(); if (three) three.dirty = true; };
   new ResizeObserver(size).observe($("vStage")); size();
   three = {THREE, renderer, scene, camera, controls, loader, key, rim, uv, floor};
   return three;
@@ -540,7 +540,12 @@ function glowFacing() {                // each frame: the glow follows how squar
 }
 function loop() {
   if (!openKey || !three) { raf = false; return; }
-  three.controls.update(); glowFacing(); three.renderer.render(three.scene, three.camera); requestAnimationFrame(loop);
+  // Draw on demand (2026-11-22, via the Hardware lane: a one-frame checkerboard of black and grey squares on the Snapdragon's Adreno
+  // through Chrome's WebGL, "the same on the website view too"): only while the view moves (auto-rotate, a drag, its damping) or after a
+  // load or a resize. A still view is never redrawn, so it cannot flicker at rest.
+  const moved = three.controls.update();
+  if (moved || three.dirty) { three.dirty = false; glowFacing(); three.renderer.render(three.scene, three.camera); }
+  requestAnimationFrame(loop);
 }
 async function show(k) {
   const u = UNITS[k]; if (!u) return;
@@ -554,9 +559,9 @@ async function show(k) {
   try { await boot(); }
   catch (e) { $("vLoadTxt").textContent = "The 3D view needs WebGL, which this browser has turned off. The specs are below."; $("vBar").parentNode.style.display = "none"; return; }
   $("vBar").parentNode.style.display = "";
-  if (cur === k && model) { $("vLoad").style.display = "none"; if (!raf) { raf = true; loop(); } return; }
+  if (cur === k && model) { $("vLoad").style.display = "none"; three.dirty = true; if (!raf) { raf = true; loop(); } return; }
   if (model) { three.scene.remove(model); model.traverse(o => { if (o.geometry) o.geometry.dispose(); }); model = null; cur = null; }
-  three.loader.load(`models/${k}.glb?v=17`, g => {
+  three.loader.load(`models/${k}.glb?v=18`, g => {
     if (openKey !== k) return;      // closed or switched while it loaded
     model = g.scene; cur = k;
     // The 4our/8ight glass overlay (the only clearcoat print with a big map) sits over the metal plate's own print; both
@@ -566,7 +571,7 @@ async function show(k) {
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; const mt = o.material;
       if (o.userData.renderOrder != null) o.renderOrder = o.userData.renderOrder;
       else if (mt && mt.transparent && mt.isMeshPhysicalMaterial && mt.map && mt.map.image && mt.map.image.width >= 1024) o.renderOrder = 2; } });
-    three.scene.add(model); frame(model); flare(model); three.controls.autoRotate = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    three.scene.add(model); frame(model); flare(model); three.controls.autoRotate = !matchMedia("(prefers-reduced-motion: reduce)").matches; three.dirty = true;
     $("vLoad").style.display = "none";
   }, e => { if (e.total) $("vBar").style.width = Math.round(100 * e.loaded / e.total) + "%"; },
   () => { $("vLoadTxt").textContent = "The 3D model didn't load. Check the connection and try again; the specs are below."; });
